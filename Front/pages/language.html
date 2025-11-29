@@ -50,6 +50,7 @@
 
     <div class="container">
         <h2 class="sections-heading">How Our AI Language Assistant Helps You</h2>
+
         <div class="language-features">
             <div class="language-feature-card fade-in">
                 <div class="language-feature-icon">
@@ -58,6 +59,7 @@
                 <h3>Conversation Practice</h3>
                 <p>Practice real-life conversations with our AI assistant. Get instant feedback on your grammar, vocabulary, and pronunciation.</p>
             </div>
+
             <div class="language-feature-card fade-in">
                 <div class="language-feature-icon">
                     <i class="fas fa-book"></i>
@@ -65,6 +67,7 @@
                 <h3>Vocabulary Builder</h3>
                 <p>Learn essential words and phrases for everyday situations. Our AI adapts to your level and interests.</p>
             </div>
+
             <div class="language-feature-card fade-in">
                 <div class="language-feature-icon">
                     <i class="fas fa-microphone"></i>
@@ -72,6 +75,7 @@
                 <h3>Pronunciation Training</h3>
                 <p>Improve your accent with speech recognition technology that analyzes and corrects your pronunciation.</p>
             </div>
+
             <div class="language-feature-card fade-in">
                 <div class="language-feature-icon">
                     <i class="fas fa-clipboard-check"></i>
@@ -91,10 +95,11 @@
                     <p>Practice conversation in a safe, judgment-free environment</p>
                 </div>
             </div>
+
             <div class="ai-chat-container">
                 <div class="ai-chat-messages"></div>
                 <div class="ai-chat-input">
-                    <input type="text" placeholder="Напишите сообщение...">
+                    <input type="text" placeholder="Type a message...">
                     <button><i class="fas fa-paper-plane"></i></button>
                 </div>
             </div>
@@ -106,26 +111,28 @@
                 <button class="exercise-tab" data-tab="grammar">Grammar</button>
                 <button class="exercise-tab" data-tab="listening">Listening</button>
             </div>
+
             <div class="exercise-content">
                 <div class="exercise-item">
-                    <div class="exercise-question">Выберите правильный перевод слова "Hello":</div>
+                    <div class="exercise-question">Choose the correct translation of the word "Hello":</div>
                     <div class="exercise-options">
                         <div class="exercise-option">
                             <input type="radio" name="question1" id="q1a1">
-                            <label for="q1a1">Привет</label>
+                            <label for="q1a1">Hello</label>
                         </div>
                         <div class="exercise-option">
                             <input type="radio" name="question1" id="q1a2">
-                            <label for="q1a2">Спасибо</label>
+                            <label for="q1a2">Thank you</label>
                         </div>
                         <div class="exercise-option">
                             <input type="radio" name="question1" id="q1a3">
-                            <label for="q1a3">Пожалуйста</label>
+                            <label for="q1a3">Please</label>
                         </div>
                     </div>
                 </div>
+
                 <div class="exercise-item">
-                    <div class="exercise-question">Закончите предложение: "My name ___ John."</div>
+                    <div class="exercise-question">Complete the sentence: "My name ___ John."</div>
                     <div class="exercise-options">
                         <div class="exercise-option">
                             <input type="radio" name="question2" id="q2a1">
@@ -141,6 +148,7 @@
                         </div>
                     </div>
                 </div>
+
                 <button class="exercise-submit">Check Answers</button>
             </div>
         </div>
@@ -150,20 +158,24 @@
                 <h2>Your Learning Progress</h2>
                 <a href="#" class="btn-main">View Detailed Report</a>
             </div>
+
             <div class="progress-stats">
                 <div class="progress-stat">
                     <div class="progress-number">87%</div>
                     <div class="progress-label">Vocabulary Mastery</div>
                 </div>
+
                 <div class="progress-stat">
                     <div class="progress-number">72%</div>
                     <div class="progress-label">Grammar Accuracy</div>
                 </div>
+
                 <div class="progress-stat">
                     <div class="progress-number">64%</div>
                     <div class="progress-label">Speaking Fluency</div>
                 </div>
             </div>
+
             <div class="progress-bar-container">
                 <div class="progress-bar-label">
                     <span>Daily Goal</span>
@@ -217,55 +229,74 @@
         if (!exerciseContent) return;
         exerciseContent.innerHTML = '';
         if (!items || !items.length) return;
+
         setActiveTab(type);
+
         items.forEach((item, index) => {
             const wrapper = document.createElement('div');
             wrapper.className = 'exercise-item';
+
             const q = document.createElement('div');
             q.className = 'exercise-question';
             q.textContent = item.question || '';
             wrapper.appendChild(q);
+
             if (item.options && item.options.length) {
                 const optsWrap = document.createElement('div');
                 optsWrap.className = 'exercise-options';
+
                 item.options.forEach((opt, i) => {
                     const optDiv = document.createElement('div');
                     optDiv.className = 'exercise-option';
+
                     const input = document.createElement('input');
                     input.type = 'radio';
                     input.name = 'q' + index;
                     input.id = 'q' + index + 'a' + i;
+
                     if (item.correct_option_index === i) input.dataset.correct = 'true';
+
                     const label = document.createElement('label');
                     label.htmlFor = input.id;
                     label.textContent = opt;
+
                     optDiv.appendChild(input);
                     optDiv.appendChild(label);
                     optsWrap.appendChild(optDiv);
                 });
+
                 wrapper.appendChild(optsWrap);
             }
+
             exerciseContent.appendChild(wrapper);
         });
+
         const submitBtn = document.createElement('button');
         submitBtn.className = 'exercise-submit';
         submitBtn.textContent = 'Check Answers';
+
         submitBtn.addEventListener('click', () => {
             const itemsDom = exerciseContent.querySelectorAll('.exercise-item');
+
             itemsDom.forEach(itemDom => {
                 const opts = itemDom.querySelectorAll('.exercise-option');
+
                 opts.forEach(o => {
                     o.classList.remove('correct');
                     o.classList.remove('incorrect');
                 });
+
                 const checked = itemDom.querySelector('input[type="radio"]:checked');
+
                 if (checked) {
                     const optDiv = checked.closest('.exercise-option');
+
                     if (checked.dataset.correct === 'true') optDiv.classList.add('correct');
                     else optDiv.classList.add('incorrect');
                 }
             });
         });
+
         exerciseContent.appendChild(submitBtn);
     }
 
@@ -274,79 +305,89 @@
             const resp = await fetch('/api/language/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    messages: conversation,
-                    ui_language: 'ru'
-                })
+                body: JSON.stringify({ messages: conversation, ui_language: 'en' })
             });
+
             if (!resp.ok) {
-                appendMessage('Ошибка сервера при обработке запроса.', 'assistant');
+                appendMessage('Server error while processing the request.', 'assistant');
                 return;
             }
+
             const data = await resp.json();
+
             if (!data || data.status !== 'success') {
-                appendMessage('Не удалось получить ответ от ассистента.', 'assistant');
+                appendMessage('Failed to receive a response from the assistant.', 'assistant');
                 return;
             }
+
             const payload = data.data || {};
+
             if (payload.assistant_message) {
                 appendMessage(payload.assistant_message, 'assistant');
             }
+
             if (payload.exercises && payload.exercises.items && payload.exercises.items.length) {
                 const exType = payload.exercises.type || 'vocabulary';
                 renderExercises(exType, payload.exercises.items);
             }
+
         } catch (e) {
-            appendMessage('Произошла ошибка соединения.', 'assistant');
+            appendMessage('A connection error occurred.', 'assistant');
         }
     }
 
     async function initTutor() {
         if (!chatMessages) return;
+
         chatMessages.innerHTML = '';
         conversation = [];
+
         try {
             const resp = await fetch('/api/language/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    messages: [],
-                    ui_language: 'ru'
-                })
+                body: JSON.stringify({ messages: [], ui_language: 'en' })
             });
+
             if (!resp.ok) {
-                appendMessage('Не удалось подключиться к языковому ассистенту.', 'assistant');
+                appendMessage('Unable to connect to the language assistant.', 'assistant');
                 return;
             }
+
             const data = await resp.json();
+
             if (data && data.status === 'success' && data.data && data.data.assistant_message) {
                 const payload = data.data;
                 appendMessage(payload.assistant_message, 'assistant');
+
                 if (payload.exercises && payload.exercises.items && payload.exercises.items.length) {
                     const exType = payload.exercises.type || 'vocabulary';
                     renderExercises(exType, payload.exercises.items);
                 }
+
             } else {
-                appendMessage('Ассистент недоступен.', 'assistant');
+                appendMessage('The assistant is unavailable.', 'assistant');
             }
+
         } catch (e) {
-            appendMessage('Ошибка подключения к ассистенту.', 'assistant');
+            appendMessage('Assistant connection error.', 'assistant');
         }
     }
 
     async function handleUserMessage() {
         if (!chatInput) return;
+
         const text = chatInput.value.trim();
         if (!text) return;
+
         appendMessage(text, 'user');
         chatInput.value = '';
+
         await sendConversation();
     }
 
     if (chatButton) {
-        chatButton.addEventListener('click', () => {
-            handleUserMessage();
-        });
+        chatButton.addEventListener('click', () => handleUserMessage());
     }
 
     if (chatInput) {
@@ -362,7 +403,7 @@
         exerciseTabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 const type = tab.getAttribute('data-tab');
-                appendMessage('Я хочу потренировать ' + type + '.', 'user');
+                appendMessage('I want to practice ' + type + '.', 'user');
                 sendConversation();
             });
         });
@@ -386,18 +427,13 @@
 <script>
     fetch('/header.html')
         .then(response => {
-            console.log("Response status:", response.status);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
+            if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
             return response.text();
         })
         .then(html => {
-            console.log("Header loaded successfully");
             document.getElementById('header-container').innerHTML = html;
         })
         .catch(error => {
-            console.error('Error loading header:', error);
             document.getElementById('header-container').innerHTML =
                 `<div style="color: red;">Error loading header: ${error.message}</div>`;
         });
