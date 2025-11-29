@@ -23,9 +23,9 @@
         }
         .ai-modal-content {
             background: #ffffff;
-            max-width: 800px;
-            width: 90%;
-            max-height: 80vh;
+            max-width: 900px;
+            width: 95%;
+            max-height: 85vh;
             border-radius: 20px;
             padding: 24px 28px;
             box-shadow: 0 20px 50px rgba(15, 23, 42, 0.4);
@@ -64,6 +64,73 @@
             font-size: 0.95rem;
             line-height: 1.5;
             color: #111827;
+        }
+        .ai-modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            color: #fff;
+            border: none;
+            border-radius: 999px;
+            padding: 8px 18px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .btn-primary:disabled {
+            opacity: 0.7;
+            cursor: default;
+        }
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #111827;
+            border: none;
+            border-radius: 999px;
+            padding: 8px 16px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+        .ai-subtitle {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #4b5563;
+            margin-bottom: 6px;
+        }
+        .ai-field-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #374151;
+            margin: 10px 0 4px;
+        }
+        .ai-textarea {
+            width: 100%;
+            min-height: 120px;
+            resize: vertical;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            padding: 8px 10px;
+            font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 0.9rem;
+        }
+        .ai-select {
+            width: 100%;
+            border-radius: 999px;
+            border: 1px solid #e5e7eb;
+            padding: 8px 10px;
+            font-size: 0.9rem;
+            font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f9fafb;
+        }
+        .ai-modal-section {
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -162,21 +229,6 @@
                     </div>
                 </div>
 
-                <div class="area-card">
-                    <h4>Quantifiable Achievements</h4>
-                    <p>Your experience section lists responsibilities but lacks measurable results.</p>
-                    <div class="suggestion">
-                        <strong>Suggestion:</strong> Add metrics to demonstrate impact. For example: "Increased sales by 25%" instead of "Responsible for sales".
-                    </div>
-                </div>
-
-                <div class="area-card">
-                    <h4>Keyword Optimization</h4>
-                    <p>Your CV is missing important keywords that applicant tracking systems look for.</p>
-                    <div class="suggestion">
-                        <strong>Suggestion:</strong> Research job descriptions for your target roles and incorporate relevant keywords naturally throughout your CV.
-                    </div>
-                </div>
             </div>
 
             <div class="strengths">
@@ -187,21 +239,6 @@
                         <h4>Clear Structure</h4>
                         <p>Easy to read and well organized</p>
                     </div>
-                    <div class="strength-item">
-                        <i class="fas fa-check-circle"></i>
-                        <h4>Relevant Experience</h4>
-                        <p>Good alignment with your target industry</p>
-                    </div>
-                    <div class="strength-item">
-                        <i class="fas fa-check-circle"></i>
-                        <h4>Education Background</h4>
-                        <p>Strong academic credentials</p>
-                    </div>
-                    <div class="strength-item">
-                        <i class="fas fa-check-circle"></i>
-                        <h4>Contact Information</h4>
-                        <p>Complete and professional</p>
-                    </div>
                 </div>
             </div>
         </div>
@@ -211,11 +248,46 @@
 <div class="ai-modal" id="aiModal">
     <div class="ai-modal-content">
         <div class="ai-modal-header">
-            <div class="ai-modal-title">NeuroHR Analysis</div>
+            <div class="ai-modal-title" id="aiModalTitle">NeuroHR Analysis</div>
             <button class="ai-modal-close" id="aiModalClose">&times;</button>
         </div>
         <div class="ai-modal-body">
-            <div class="ai-modal-text" id="aiModalText"></div>
+            <div id="analysisStep">
+                <div class="ai-modal-section">
+                    <div class="ai-modal-text" id="aiAnalysisText"></div>
+                </div>
+                <div class="ai-modal-actions">
+                    <button class="btn-secondary" id="closeAnalysisBtn">Close</button>
+                    <button class="btn-primary" id="continueToResumeBtn">Generate CV based on this</button>
+                </div>
+            </div>
+
+            <div id="resumeStep" style="display: none;">
+                <div class="ai-modal-section">
+                    <div class="ai-subtitle">NeuroHR suggestions</div>
+                    <div class="ai-modal-text" id="aiMissingText"></div>
+                </div>
+
+                <div class="ai-modal-section">
+                    <div class="ai-field-label">CV format</div>
+                    <select id="cvFormatSelect" class="ai-select">
+                        <option value="europass">Europass</option>
+                        <option value="french">French-style CV</option>
+                        <option value="simple">Simple CV</option>
+                        <option value="modern">Modern CV</option>
+                    </select>
+                </div>
+
+                <div class="ai-modal-section">
+                    <div class="ai-field-label">Add missing information here</div>
+                    <textarea id="extraInfoInput" class="ai-textarea" placeholder="Write additional details: missing work experience, education, skills, projects, languages, etc."></textarea>
+                </div>
+
+                <div class="ai-modal-actions">
+                    <button class="btn-secondary" id="backToAnalysisBtn">Back</button>
+                    <button class="btn-primary" id="generatePdfBtn">Download PDF CV</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -247,9 +319,27 @@
     const fileInput = document.getElementById('cvFile');
     const analyzeBtn = document.getElementById('analyzeBtn');
     const fileNameEl = document.getElementById('fileName');
+
     const modal = document.getElementById('aiModal');
-    const modalText = document.getElementById('aiModalText');
+    const modalTitle = document.getElementById('aiModalTitle');
     const modalClose = document.getElementById('aiModalClose');
+
+    const analysisStep = document.getElementById('analysisStep');
+    const resumeStep = document.getElementById('resumeStep');
+
+    const aiAnalysisText = document.getElementById('aiAnalysisText');
+    const aiMissingText = document.getElementById('aiMissingText');
+
+    const closeAnalysisBtn = document.getElementById('closeAnalysisBtn');
+    const continueToResumeBtn = document.getElementById('continueToResumeBtn');
+    const backToAnalysisBtn = document.getElementById('backToAnalysisBtn');
+    const generatePdfBtn = document.getElementById('generatePdfBtn');
+
+    const cvFormatSelect = document.getElementById('cvFormatSelect');
+    const extraInfoInput = document.getElementById('extraInfoInput');
+
+    let lastCvText = "";
+    let lastFilename = "resume.pdf";
 
     fileInput.addEventListener('change', function () {
         if (fileInput.files.length > 0) {
@@ -261,8 +351,7 @@
         }
     });
 
-    function openModal(text) {
-        modalText.textContent = text;
+    function openModal() {
         modal.classList.add('visible');
     }
 
@@ -271,7 +360,7 @@
     }
 
     modalClose.addEventListener('click', closeModal);
-    modal.addEventListener('click', function (e) {
+    document.getElementById('aiModal').addEventListener('click', function (e) {
         if (e.target === modal) {
             closeModal();
         }
@@ -280,6 +369,22 @@
         if (e.key === 'Escape') {
             closeModal();
         }
+    });
+
+    function showAnalysisStep() {
+        modalTitle.textContent = 'NeuroHR Analysis';
+        analysisStep.style.display = 'block';
+        resumeStep.style.display = 'none';
+    }
+
+    function showResumeStep() {
+        modalTitle.textContent = 'Generate CV with NeuroHR';
+        analysisStep.style.display = 'none';
+        resumeStep.style.display = 'block';
+    }
+
+    closeAnalysisBtn.addEventListener('click', function () {
+        closeModal();
     });
 
     analyzeBtn.addEventListener('click', async function () {
@@ -302,7 +407,13 @@
             const data = await response.json();
 
             if (response.ok && data.status === 'success') {
-                openModal(data.analysis || 'No analysis text received.');
+                lastCvText = data.cv_text || "";
+                lastFilename = (data.filename || 'resume').replace(/\.[^/.]+$/, '') + '_neurohr.pdf';
+                aiAnalysisText.textContent = data.analysis || 'No analysis text received.';
+                extraInfoInput.value = '';
+                cvFormatSelect.value = 'europass';
+                showAnalysisStep();
+                openModal();
             } else {
                 const msg = data.detail || data.message || 'Error while analyzing CV.';
                 alert(msg);
@@ -312,6 +423,104 @@
         } finally {
             analyzeBtn.disabled = false;
             analyzeBtn.textContent = 'Analyze My CV';
+        }
+    });
+
+    continueToResumeBtn.addEventListener('click', async function () {
+        if (!lastCvText) {
+            alert('No CV text available. Please run analysis again.');
+            return;
+        }
+
+        continueToResumeBtn.disabled = true;
+        continueToResumeBtn.textContent = 'Preparing...';
+
+        try {
+            const response = await fetch('/neurohr-api/resume/missing', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    cv_text: lastCvText,
+                    language: 'English'
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.status === 'success') {
+                aiMissingText.textContent = data.message || '';
+                showResumeStep();
+            } else {
+                const msg = data.detail || data.message || 'Error while preparing resume.';
+                alert(msg);
+            }
+        } catch (e) {
+            alert('Network error: ' + e);
+        } finally {
+            continueToResumeBtn.disabled = false;
+            continueToResumeBtn.textContent = 'Generate CV based on this';
+        }
+    });
+
+    backToAnalysisBtn.addEventListener('click', function () {
+        showAnalysisStep();
+    });
+
+    generatePdfBtn.addEventListener('click', async function () {
+        if (!lastCvText) {
+            alert('No CV text available. Please run analysis again.');
+            return;
+        }
+
+        const format = cvFormatSelect.value || 'europass';
+        const extraInfo = extraInfoInput.value || '';
+
+        generatePdfBtn.disabled = true;
+        generatePdfBtn.textContent = 'Generating...';
+
+        try {
+            const response = await fetch('/neurohr-api/resume/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    cv_text: lastCvText,
+                    extra_info: extraInfo,
+                    format: format,
+                    language: 'English',
+                    filename: lastFilename
+                })
+            });
+
+            if (!response.ok) {
+                const data = await response.json().catch(() => ({}));
+                const msg = data.detail || data.message || 'Error while generating resume PDF.';
+                alert(msg);
+                return;
+            }
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+
+            const disposition = response.headers.get('Content-Disposition') || '';
+            const match = disposition.match(/filename="(.+?)"/i);
+            const filename = match ? match[1] : lastFilename || 'resume.pdf';
+
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+        } catch (e) {
+            alert('Network error: ' + e);
+        } finally {
+            generatePdfBtn.disabled = false;
+            generatePdfBtn.textContent = 'Download PDF CV';
         }
     });
 </script>
