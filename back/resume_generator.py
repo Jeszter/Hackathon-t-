@@ -7,8 +7,6 @@ load_dotenv()
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-# ---------- SYSTEM PROMPTS ----------
-
 neurohr_system_prompt = """
 You are an experienced HR specialist and CV reviewer.
 
@@ -37,7 +35,6 @@ Return a friendly text addressed to the user that:
 Do not invent any data.
 """
 
-# ВАЖНО: теперь просим модель выдавать строго Markdown
 resume_generate_system_prompt = """
 You are a professional CV writer.
 
@@ -77,8 +74,6 @@ Your goal:
 """
 
 
-# ---------- OPENAI CALLS ----------
-
 def analyze_cv_text(cv_text: str) -> str:
     user_prompt = (
         "Here is the CV text:\n\n"
@@ -114,24 +109,26 @@ def get_missing_info_prompt(cv_text: str, language: str) -> str:
     return response.choices[0].message.content
 
 
-# ---------- PDF GENERATION (КРАСИВАЯ ВЁРСТКА) ----------
-
 def build_pdf_from_text(markdown_text: str) -> io.BytesIO:
-    """
-    Принимает структурированный Markdown и верстает красивый PDF:
-    - #   -> большой заголовок (имя)
-    - ##  -> заголовок секции
-    - -   -> буллет-список
-    - таблицы вида | a | b | c | -> превращаются в таблицу reportlab
-    """
-
     from reportlab.lib.pagesizes import A4
     from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
     from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-    from reportlab.lib.enums import TA_LEFT, TA_CENTER
+    from reportlab.lib.enums import TA_LEFT
     from reportlab.lib import colors
+    from reportlab.pdfbase import pdfmetrics
+    from reportlab.pdfbase.ttfonts import TTFont
 
     buffer = io.BytesIO()
+
+    fonts_dir = os.path.join(os.path.dirname(__file__), "fonts")
+    regular_path = os.path.join(fonts_dir, "NotoSans-Regular.ttf")
+    bold_path = os.path.join(fonts_dir, "NotoSans-Bold.ttf")
+
+    registered = pdfmetrics.getRegisteredFontNames()
+    if "NotoSans" not in registered:
+        pdfmetrics.registerFont(TTFont("NotoSans", regular_path))
+    if "NotoSans-Bold" not in registered:
+        pdfmetrics.registerFont(TTFont("NotoSans-Bold", bold_path))
 
     doc = SimpleDocTemplate(
         buffer,
@@ -144,10 +141,10 @@ def build_pdf_from_text(markdown_text: str) -> io.BytesIO:
 
     styles = getSampleStyleSheet()
 
-    # Базовые стили
     title_style = ParagraphStyle(
         "CVTitle",
         parent=styles["Title"],
+        fontName="NotoSans-Bold",
         fontSize=20,
         leading=24,
         alignment=TA_LEFT,
@@ -157,6 +154,7 @@ def build_pdf_from_text(markdown_text: str) -> io.BytesIO:
     h2_style = ParagraphStyle(
         "SectionHeading",
         parent=styles["Heading2"],
+        fontName="NotoSans-Bold",
         fontSize=13,
         leading=16,
         spaceBefore=12,
@@ -167,6 +165,7 @@ def build_pdf_from_text(markdown_text: str) -> io.BytesIO:
     normal_style = ParagraphStyle(
         "NormalText",
         parent=styles["Normal"],
+        fontName="NotoSans",
         fontSize=10,
         leading=13,
         spaceAfter=2,
@@ -175,6 +174,7 @@ def build_pdf_from_text(markdown_text: str) -> io.BytesIO:
     bullet_style = ParagraphStyle(
         "BulletText",
         parent=styles["Normal"],
+        fontName="NotoSans",
         fontSize=10,
         leading=13,
         leftIndent=12,
@@ -200,8 +200,9 @@ def build_pdf_from_text(markdown_text: str) -> io.BytesIO:
             ("RIGHTPADDING", (0, 0), (-1, -1), 4),
             ("TOPPADDING", (0, 0), (-1, -1), 2),
             ("BOTTOMPADDING", (0, 0), (-1, -1), 2),
+            ("FONTNAME", (0, 0), (-1, -1), "NotoSans"),
+            ("FONTSIZE", (0, 0), (-1, -1), 9),
         ]
-        # шапка серым фоном
         if len(current_table) > 1:
             style_cmds.append(("BACKGROUND", (0, 0), (-1, 0), colors.lightgrey))
             style_cmds.append(("TEXTCOLOR", (0, 0), (-1, 0), colors.black))
@@ -213,7 +214,6 @@ def build_pdf_from_text(markdown_text: str) -> io.BytesIO:
     for raw_line in lines:
         line = raw_line.rstrip("\n")
 
-        # Таблицы Markdown: строки вида "| A | B | C |"
         if line.strip().startswith("|") and line.strip().endswith("|"):
             inside_table = True
             row = [cell.strip() for cell in line.strip().strip("|").split("|")]
@@ -226,29 +226,23 @@ def build_pdf_from_text(markdown_text: str) -> io.BytesIO:
 
         stripped = line.strip()
 
-        # Пустая строка -> вертикальный отступ
         if stripped == "":
             story.append(Spacer(1, 6))
             continue
 
         if stripped.startswith("# "):
-            # Главный заголовок (имя)
             text = stripped[2:].strip()
             story.append(Paragraph(text, title_style))
             story.append(Spacer(1, 6))
         elif stripped.startswith("## "):
-            # Заголовок секции
             text = stripped[3:].strip()
             story.append(Paragraph(text, h2_style))
         elif stripped.startswith("- "):
-            # Буллет
             text = stripped[2:].strip()
             story.append(Paragraph(text, bullet_style, bulletText="•"))
         else:
-            # Обычный абзац
             story.append(Paragraph(stripped, normal_style))
 
-    # Если текст закончился в середине таблицы – не забываем её вывести
     if inside_table:
         flush_table()
 
