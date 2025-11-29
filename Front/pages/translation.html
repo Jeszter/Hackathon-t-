@@ -12,7 +12,6 @@
 <div id="header-container"></div>
 
 <main>
-
     <section class="translation-tool-section" id="translation-tool">
         <div class="translation-tool-bg">
             <div class="translation-tool-circle translation-tool-circle-1"></div>
@@ -67,11 +66,11 @@
                                 </div>
                             </div>
                             <div class="text-area-container">
-                                    <textarea
-                                            id="inputText"
-                                            class="text-area"
-                                            placeholder="Type or paste text here..."
-                                    >Hello! Welcome to our translation service. How can we assist you today?</textarea>
+                                <textarea
+                                    id="inputText"
+                                    class="text-area"
+                                    placeholder="Type or paste text here..."
+                                >Hello! Welcome to our translation service. How can we assist you today?</textarea>
                                 <div class="char-count" id="inputCount">0/5000</div>
                             </div>
                         </div>
@@ -102,12 +101,12 @@
                                 </div>
                             </div>
                             <div class="text-area-container">
-                                    <textarea
-                                            id="outputText"
-                                            class="text-area"
-                                            placeholder="Your translation will appear here..."
-                                            readonly
-                                    ></textarea>
+                                <textarea
+                                    id="outputText"
+                                    class="text-area"
+                                    placeholder="Your translation will appear here..."
+                                    readonly
+                                ></textarea>
                                 <div class="char-count" id="outputCount">0/5000</div>
                             </div>
                         </div>
@@ -193,7 +192,7 @@
     </div>
 </footer>
 
-
+<script src="../js/translation.js"></script>
 <script>
     fetch('/header.html')
         .then(response => {
@@ -209,10 +208,7 @@
             document.getElementById('header-container').innerHTML =
                 `<div style="color: red;">Error loading header: ${error.message}</div>`;
         });
-
 </script>
 
 </body>
-
-
 </html>
