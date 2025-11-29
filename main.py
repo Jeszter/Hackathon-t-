@@ -16,12 +16,13 @@ from back.housing_backend import router as housing_router
 app = FastAPI()
 
 # Путь к фронту
-front_dir = Path(__file__).parent / "Front"
+front_dir = Path(__file__).parent / "Front/pages/"
 
 # Домашняя страница
 @app.get("/")
 async def home():
-    return FileResponse(front_dir / "index.html")
+    return FileResponse(front_dir / "/home.html")
+
 
 # Подключение статических файлов (css, js, img)
 app.mount("/css", StaticFiles(directory=front_dir / "css"), name="css")

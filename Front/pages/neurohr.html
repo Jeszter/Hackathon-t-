@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroHR - AI CV Analysis | UrbanMind</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/neurocv.css">
+</head>
+<body>
+
+
+<section class="neuro-hero">
+    <span class="hero-decoration plus-top">x</span>
+    <span class="hero-decoration circle-mid">o</span>
+    <span class="hero-decoration plus-bottom">+</span>
+
+    <div class="hero-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="decoration-circle circle-1"></div>
+    <div class="decoration-circle circle-2"></div>
+    <div class="decoration-circle circle-3"></div>
+
+    <div class="dots-pattern dots-1"></div>
+    <div class="dots-pattern dots-2"></div>
+
+    <div class="neuro-hero-bg">
+        <div class="neuro-blob neuro-blob-1"></div>
+        <div class="neuro-blob neuro-blob-2"></div>
+    </div>
+
+    <div class="container neuro-hero-content">
+        <div class="neuro-hero-text fade-in">
+            <h1>NeuroHR: AI-Powered CV Analysis</h1>
+            <p>Get personalized feedback on your CV with our advanced AI technology. Improve your chances of landing your dream job with actionable insights.</p>
+        </div>
+        <div class="neuro-hero-image fade-in">
+            <img src="../img/NeuroHR.png" alt="AI CV Analysis">
+        </div>
+    </div>
+</section>
+
+<section class="cv-section">
+
+    <div class="container">
+        <div class="cv-container fade-in">
+            <div class="cv-icon">
+                <i class="fas fa-file-alt"></i>
+            </div>
+            <h2>Upload Your CV for Analysis</h2>
+            <p>Our AI will analyze your CV and provide detailed feedback on how to improve it for better job opportunities.</p>
+
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <div class="upload-text">
+                    <h3>Drag & Drop your CV here</h3>
+                    <p>Supported formats: PDF, DOC, DOCX (Max 5MB)</p>
+                </div>
+                <input type="file" id="cvFile" class="file-input" accept=".pdf,.doc,.docx">
+                <label for="cvFile" class="file-label">Choose File</label>
+                <div class="file-info">
+                    <div class="file-name" id="fileName">No file selected</div>
+                </div>
+            </div>
+
+            <button class="analyze-btn" id="analyzeBtn" disabled>Analyze My CV</button>
+        </div>
+    </div>
+</section>
+
+<section class="results-section" id="resultsSection">
+    <div class="container">
+        <div class="results-container fade-in">
+            <div class="results-header">
+                <h2>Your CV Analysis Results</h2>
+                <p>Based on our AI analysis, here are recommendations to improve your CV</p>
+            </div>
+
+            <div class="results-score">
+                <div class="score-circle">
+                    <div class="score-value">7.5/10</div>
+                </div>
+                <div class="score-text">
+                    <h3>Good Foundation, Needs Refinement</h3>
+                    <p>Your CV has a solid structure but could be optimized for better impact. Focus on the areas below to increase your score.</p>
+                </div>
+            </div>
+
+            <div class="improvement-areas">
+                <h3>Areas for Improvement</h3>
+
+                <div class="area-card">
+                    <h4>Professional Summary</h4>
+                    <p>Your summary is too generic and doesn't highlight your unique value proposition.</p>
+                    <div class="suggestion">
+                        <strong>Suggestion:</strong> Tailor your summary to specific roles, focusing on key achievements and skills relevant to your target industry.
+                    </div>
+                </div>
+
+                <div class="area-card">
+                    <h4>Quantifiable Achievements</h4>
+                    <p>Your experience section lists responsibilities but lacks measurable results.</p>
+                    <div class="suggestion">
+                        <strong>Suggestion:</strong> Add metrics to demonstrate impact. For example: "Increased sales by 25%" instead of "Responsible for sales".
+                    </div>
+                </div>
+
+                <div class="area-card">
+                    <h4>Keyword Optimization</h4>
+                    <p>Your CV is missing important keywords that applicant tracking systems look for.</p>
+                    <div class="suggestion">
+                        <strong>Suggestion:</strong> Research job descriptions for your target roles and incorporate relevant keywords naturally throughout your CV.
+                    </div>
+                </div>
+            </div>
+
+            <div class="strengths">
+                <h3>Your Strengths</h3>
+                <div class="strength-list">
+                    <div class="strength-item">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>Clear Structure</h4>
+                        <p>Easy to read and well organized</p>
+                    </div>
+                    <div class="strength-item">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>Relevant Experience</h4>
+                        <p>Good alignment with your target industry</p>
+                    </div>
+                    <div class="strength-item">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>Education Background</h4>
+                        <p>Strong academic credentials</p>
+                    </div>
+                    <div class="strength-item">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>Contact Information</h4>
+                        <p>Complete and professional</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <h2>Ready to Improve Your Job Prospects?</h2>
+        <p>Use our AI-powered tools to optimize your CV and stand out from the competition.</p>
+        <a href="#uploadArea" class="btn-footer">Analyze Another CV</a>
+    </div>
+</footer>
+
+<script src="../js/nav.js"></script>
+
+<script src="../js/load-components.js"></script>
+</body>
+</html>

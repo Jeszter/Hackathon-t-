@@ -1,5 +1,5 @@
 function loadComponents() {
-    return fetch('../header.html')
+    return fetch('../components/header.html')
         .then(response => {
             if (!response.ok) throw new Error('Header not found');
             return response.text();
