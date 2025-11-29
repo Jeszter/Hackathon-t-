@@ -1,4 +1,4 @@
-// Простая реализация плавной прокрутки
+
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -12,13 +12,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 behavior: 'smooth'
             });
 
-            // Закрытие мобильного меню после клика
             document.querySelector('.nav-menu').classList.remove('active');
         }
     });
 });
 
-// Анимация появления элементов при прокрутке
 const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -50px 0px'
@@ -32,7 +30,6 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-// Наблюдаем за всеми элементами с классом fade-in
 document.addEventListener('DOMContentLoaded', () => {
     const elementsToAnimate = document.querySelectorAll('.feature-card, .card');
     elementsToAnimate.forEach(el => {
@@ -41,12 +38,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Обработчик для мобильного меню
 document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
     const navMenu = document.querySelector('.nav-menu');
     navMenu.classList.toggle('active');
 
-    // Смена иконки меню
     const icon = this.querySelector('i');
     if (navMenu.classList.contains('active')) {
         icon.classList.remove('fa-bars');
