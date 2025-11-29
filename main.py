@@ -106,6 +106,8 @@ app.include_router(neurohr_router, prefix="/neurohr-api")
 app.include_router(job_router)
 app.include_router(translation_router)
 app.include_router(language_router, prefix="/api/language")
+app.include_router(culture_router, prefix="/culture")
+app.include_router(chat_router, prefix="/api")
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
