@@ -8,6 +8,64 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/neurocv.css">
+    <style>
+        .ai-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.75);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        .ai-modal.visible {
+            display: flex;
+        }
+        .ai-modal-content {
+            background: #ffffff;
+            max-width: 800px;
+            width: 90%;
+            max-height: 80vh;
+            border-radius: 20px;
+            padding: 24px 28px;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.4);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .ai-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+        .ai-modal-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #111827;
+        }
+        .ai-modal-close {
+            border: none;
+            background: transparent;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: #6b7280;
+        }
+        .ai-modal-close:hover {
+            color: #111827;
+        }
+        .ai-modal-body {
+            overflow-y: auto;
+            padding-top: 4px;
+        }
+        .ai-modal-text {
+            white-space: pre-wrap;
+            font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #111827;
+        }
+    </style>
 </head>
 <body>
 <div id="header-container"></div>
@@ -47,7 +105,6 @@
 </section>
 
 <section class="cv-section">
-
     <div class="container">
         <div class="cv-container fade-in">
             <div class="cv-icon">
@@ -62,9 +119,9 @@
                 </div>
                 <div class="upload-text">
                     <h3>Drag & Drop your CV here</h3>
-                    <p>Supported formats: PDF, DOC, DOCX (Max 5MB)</p>
+                    <p>Supported formats: PDF, DOCX, TXT (Max 5MB)</p>
                 </div>
-                <input type="file" id="cvFile" class="file-input" accept=".pdf,.doc,.docx">
+                <input type="file" id="cvFile" class="file-input" accept=".pdf,.docx,.txt">
                 <label for="cvFile" class="file-label">Choose File</label>
                 <div class="file-info">
                     <div class="file-name" id="fileName">No file selected</div>
@@ -151,6 +208,18 @@
     </div>
 </section>
 
+<div class="ai-modal" id="aiModal">
+    <div class="ai-modal-content">
+        <div class="ai-modal-header">
+            <div class="ai-modal-title">NeuroHR Analysis</div>
+            <button class="ai-modal-close" id="aiModalClose">&times;</button>
+        </div>
+        <div class="ai-modal-body">
+            <div class="ai-modal-text" id="aiModalText"></div>
+        </div>
+    </div>
+</div>
+
 <footer class="footer">
     <div class="container">
         <h2>Ready to Improve Your Job Prospects?</h2>
@@ -159,28 +228,93 @@
     </div>
 </footer>
 
+<script>
+    fetch('/header.html')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.text();
+        })
+        .then(html => {
+            document.getElementById('header-container').innerHTML = html;
+        })
+        .catch(error => {
+            document.getElementById('header-container').innerHTML =
+                `<div style="color: red;">Error loading header: ${error.message}</div>`;
+        });
 
-    <script>
-        // Динамическая загрузка хедера
-        console.log("Loading header...");
-        fetch('/header.html')
-            .then(response => {
-                console.log("Response status:", response.status);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.text();
-            })
-            .then(html => {
-                console.log("Header loaded successfully");
-                document.getElementById('header-container').innerHTML = html;
-            })
-            .catch(error => {
-                console.error('Error loading header:', error);
-                document.getElementById('header-container').innerHTML =
-                    `<div style="color: red;">Error loading header: ${error.message}</div>`;
+    const fileInput = document.getElementById('cvFile');
+    const analyzeBtn = document.getElementById('analyzeBtn');
+    const fileNameEl = document.getElementById('fileName');
+    const modal = document.getElementById('aiModal');
+    const modalText = document.getElementById('aiModalText');
+    const modalClose = document.getElementById('aiModalClose');
+
+    fileInput.addEventListener('change', function () {
+        if (fileInput.files.length > 0) {
+            fileNameEl.textContent = fileInput.files[0].name;
+            analyzeBtn.disabled = false;
+        } else {
+            fileNameEl.textContent = 'No file selected';
+            analyzeBtn.disabled = true;
+        }
+    });
+
+    function openModal(text) {
+        modalText.textContent = text;
+        modal.classList.add('visible');
+    }
+
+    function closeModal() {
+        modal.classList.remove('visible');
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', function (e) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            closeModal();
+        }
+    });
+
+    analyzeBtn.addEventListener('click', async function () {
+        if (!fileInput.files.length) {
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', fileInput.files[0]);
+
+        analyzeBtn.disabled = true;
+        analyzeBtn.textContent = 'Analyzing...';
+
+        try {
+            const response = await fetch('/neurohr-api/analyze', {
+                method: 'POST',
+                body: formData
             });
-    </script>
+
+            const data = await response.json();
+
+            if (response.ok && data.status === 'success') {
+                openModal(data.analysis || 'No analysis text received.');
+            } else {
+                const msg = data.detail || data.message || 'Error while analyzing CV.';
+                alert(msg);
+            }
+        } catch (e) {
+            alert('Network error: ' + e);
+        } finally {
+            analyzeBtn.disabled = false;
+            analyzeBtn.textContent = 'Analyze My CV';
+        }
+    });
+</script>
 
 <script src="../js/nav.js"></script>
 <script src="../js/neurohr.js"></script>

@@ -12,6 +12,7 @@ from back.work_backend import router as work_router
 from back.docs_backend import router as docs_router
 from back.language_backend import router as language_router
 from back.housing_backend import router as housing_router
+from back.neurohr_backend import router as neurohr_router
 
 app = FastAPI()
 
@@ -74,6 +75,7 @@ app.include_router(work_router, prefix="/work")
 app.include_router(docs_router, prefix="/docs")
 app.include_router(language_router, prefix="/language")
 app.include_router(housing_router, prefix="/housing")
+app.include_router(neurohr_router, prefix="/neurohr-api")
 
 
 if __name__ == "__main__":
