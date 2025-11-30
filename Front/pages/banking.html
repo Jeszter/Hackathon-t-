@@ -2,9 +2,517 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrbanMind: Banking in Slovakia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/banking.css">
 </head>
 <body>
+<div id="header-container"></div>
 
+<section class="hero" id="home">
+    <span class="hero-decoration plus-top">x</span>
+    <span class="hero-decoration circle-mid">o</span>
+    <span class="hero-decoration plus-bottom">+</span>
+
+    <div class="hero-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="decoration-circle circle-1"></div>
+    <div class="decoration-circle circle-2"></div>
+    <div class="decoration-circle circle-3"></div>
+
+    <div class="dots-pattern dots-1"></div>
+    <div class="dots-pattern dots-2"></div>
+
+    <div class="container hero-content">
+        <div class="hero-text fade-in">
+            <h1>Banking in Slovakia Made Easy</h1>
+            <p>Get help opening a bank account in Slovakia. Our AI assistant will guide you through the process and recommend the best banks based on your location and needs.</p>
+            <a href="#location-detection" class="btn-main">Find Banks Near Me</a>
+        </div>
+        <div class="robot-container fade-in">
+            <div class="robot-bg"></div>
+            <img src="../img/banking.png" alt="AI Assistant Robot" class="robot-image">
+        </div>
+    </div>
+</section>
+
+<section class="location-detection" id="location-detection">
+    <div class="location-bg">
+        <div class="location-circle location-circle-1"></div>
+        <div class="location-circle location-circle-2"></div>
+    </div>
+
+    <div class="container">
+        <h2 class="sections-heading">Find Banks in Your Area</h2>
+        <div class="location-content">
+            <div class="location-text fade-in">
+                <h3>We'll help you find the best banking options</h3>
+                <p>Allow location access to see banks near you with services tailored to newcomers in Slovakia. We'll show you branches with English-speaking staff and newcomer-friendly services.</p>
+
+                <div class="detected-location" id="detected-location">
+                    <h4>Detected Location: <span id="location-name">Bratislava, Slovakia</span></h4>
+                    <p>Based on your location, we recommend these banks with branches nearby:</p>
+                    <ul>
+                        <li><strong>SLSP (Slovenská sporiteľňa)</strong> - 3 branches within 2km</li>
+                        <li><strong>VÚB Banka</strong> - 2 branches within 1.5km</li>
+                        <li><strong>Tatra banka</strong> - 1 branch within 1km</li>
+                    </ul>
+                    <a href="#bank-cards" class="btn-location">View Recommended Banks</a>
+                </div>
+
+                <button class="btn-location" id="detect-location">
+                    <i class="fas fa-map-marker-alt"></i> Detect My Location
+                </button>
+                <p class="location-note">Your location data is processed securely and never stored on our servers.</p>
+            </div>
+            <div class="location-visual fade-in">
+                <div class="location-map">
+                    <i class="fas fa-map-marked-alt"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ai-assistant" id="ai-assistant">
+    <div class="ai-assistant-bg">
+        <div class="ai-circle ai-circle-1"></div>
+        <div class="ai-circle ai-circle-2"></div>
+    </div>
+
+    <div class="container">
+        <h2 class="sections-heading">Banking Assistant for Slovakia</h2>
+        <div class="ai-chat-container fade-in">
+            <div class="ai-chat-header">
+                <div class="ai-chat-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="ai-chat-title">
+                    <h3>Slovak Banking Consultant</h3>
+                    <p>I can help you open a bank account in Slovakia</p>
+                </div>
+            </div>
+            <div class="ai-chat-messages" id="chat-messages">
+                <div class="message message-ai">
+                    <div class="message-bubble">
+                        Hello! I'm your banking assistant for Slovakia. I can help you choose a bank, understand the account opening process, and answer questions about banking services for newcomers. Where shall we start?
+                        <div class="quick-actions">
+                            <button class="quick-action" data-action="choose-bank">Choose a Bank</button>
+                            <button class="quick-action" data-action="open-account">Open Account</button>
+                            <button class="quick-action" data-action="documents">Required Documents</button>
+                            <button class="quick-action" data-action="fees">Fees & Tariffs</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ai-chat-input">
+                <input type="text" id="chat-input" placeholder="Ask a question about Slovak banking...">
+                <button id="send-button"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="bank-cards" id="bank-cards">
+    <div class="bank-cards-bg">
+        <div class="bank-circle bank-circle-1"></div>
+        <div class="bank-circle bank-circle-2"></div>
+    </div>
+
+    <div class="container">
+        <h2 class="sections-heading">Popular Banks in Slovakia</h2>
+        <div class="bank-cards-grid">
+            <div class="bank-card fade-in">
+                <div class="bank-card-header">
+                    <div class="bank-logo">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div class="bank-info">
+                        <h3>SLSP</h3>
+                        <p>Slovenská sporiteľňa</p>
+                    </div>
+                </div>
+                <div class="bank-features">
+                    <div class="bank-feature">
+                        <i class="fas fa-check"></i>
+                        <span>Largest bank network in Slovakia</span>
+                    </div>
+                    <div class="bank-feature">
+                        <i class="fas fa-check"></i>
+                        <span>English-speaking staff in major branches</span>
+                    </div>
+                    <div class="bank-feature">
+                        <i class="fas fa-check"></i>
+                        <span>Student accounts with benefits</span>
+                    </div>
+                    <div class="bank-feature">
+                        <i class="fas fa-check"></i>
+                        <span>Mobile app with English interface</span>
+                    </div>
+                </div>
+                <div class="bank-card-footer">
+                    <div class="bank-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="rating-text">4.4/5 (1,240 reviews)</div>
+                    </div>
+                    <a href="#" class="btn-bank">Learn More</a>
+                </div>
+            </div>
+
+            <div class="bank-card fade-in">
+                <div class="bank-card-header">
+                    <div class="bank-logo">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <div class="bank-info">
+                        <h3>VÚB Banka</h3>
+                        <p>Member of Intesa Sanpaolo Group</p>
+                    </div>
+                </div>
+                <div class="bank-features">
+                    <div class="bank-feature">
+                        <i class="fas fa-check"></i>
+                        <span>International banking services</span>
+                    </div>
+                    <div class="bank-feature">
+                        <i class="fas fa-check"></i>
+                        <span>Good for EU citizens</span>
+                    </div>
+                    <div class="bank-feature">
+                        <i class="fas fa-check"></i>
+                        <span>Multi-currency accounts</span>
+                    </div>
+                    <div class="bank-feature">
+                        <i class="fas fa-check"></i>
+                        <span>Online account opening available</span>
+                    </div>
+                </div>
+                <div class="bank-card-footer">
+                    <div class="bank-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="rating-text">4.7/5 (980 reviews)</div>
+                    </div>
+                    <a href="#" class="btn-bank">Learn More</a>
+                </div>
+            </div>
+
+            <div class="bank-card fade-in">
+                <div class="bank-card-header">
+                    <div class="bank-logo">
+                        <i class="fas fa-piggy-bank"></i>
+                    </div>
+                    <div class="bank-info">
+                        <h3>Tatra banka</h3>
+                        <p>Innovative digital banking</p>
+                    </div>
+                </div>
+                <div class="bank-features">
+                    <div class="bank-feature">
+                        <i class="fas fa-check"></i>
+                        <span>Best digital banking experience</span>
+                    </div>
+                    <div class="bank-feature">
+                        <i class="fas fa-check"></i>
+                        <span>English mobile and online banking</span>
+                    </div>
+                    <div class="bank-feature">
+                        <i class="fas fa-check"></i>
+                        <span>Expat-friendly services</span>
+                    </div>
+                    <div class="bank-feature">
+                        <i class="fas fa-check"></i>
+                        <span>24/7 customer support in English</span>
+                    </div>
+                </div>
+                <div class="bank-card-footer">
+                    <div class="bank-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="rating-text">4.8/5 (1,560 reviews)</div>
+                    </div>
+                    <a href="#" class="btn-bank">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="account-opening" id="account-opening">
+    <div class="account-opening-bg">
+        <div class="account-circle account-circle-1"></div>
+        <div class="account-circle account-circle-2"></div>
+    </div>
+
+    <div class="container">
+        <h2 class="sections-heading">How to Open a Bank Account in Slovakia</h2>
+        <div class="steps-container">
+            <div class="step-card fade-in">
+                <div class="step-number">1</div>
+                <h3>Choose Your Bank</h3>
+                <p>Select a bank that fits your needs. Consider branch locations, English services, fees, and digital banking options.</p>
+            </div>
+            <div class="step-card fade-in">
+                <div class="step-number">2</div>
+                <h3>Prepare Documents</h3>
+                <p>You'll typically need: valid passport, proof of address in Slovakia, and proof of legal stay (visa/residence permit).</p>
+            </div>
+            <div class="step-card fade-in">
+                <div class="step-number">3</div>
+                <h3>Visit the Branch</h3>
+                <p>Schedule an appointment or visit during opening hours. Major branches in cities usually have English-speaking staff.</p>
+            </div>
+            <div class="step-card fade-in">
+                <div class="step-number">4</div>
+                <h3>Complete Application</h3>
+                <p>Fill out forms, provide documents, and make initial deposit if required. Receive your account details and bank card.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <h2>Start Your Banking Journey in Slovakia</h2>
+        <p>Open an account at a Slovak bank and enjoy all the benefits of modern banking. Our assistant is always ready to answer your questions.</p>
+        <a href="#ai-assistant" class="btn-footer">Ask the Assistant</a>
+    </div>
+</footer>
+
+<script>
+
+    fetch('/header.html')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.text();
+        })
+        .then(html => {
+            document.getElementById('header-container').innerHTML = html;
+        })
+        .catch(error => {
+            document.getElementById('header-container').innerHTML =
+                `<div style="color: red;">Error loading header: ${error.message}</div>`;
+        });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const navMenu = document.getElementById('nav-menu');
+
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+            });
+        }
+
+        // Location detection
+        const detectLocationBtn = document.getElementById('detect-location');
+        const detectedLocation = document.getElementById('detected-location');
+        const locationName = document.getElementById('location-name');
+
+        if (detectLocationBtn) {
+            detectLocationBtn.addEventListener('click', function() {
+                detectLocationBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Detecting Location...';
+                detectLocationBtn.disabled = true;
+
+                // Simulate location detection (in a real app, this would use the Geolocation API)
+                setTimeout(() => {
+                    // This is a simulation - in a real app, you would use:
+                    // navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+
+                    // For demonstration, we'll assume the user is in Bratislava
+                    const cities = ['Bratislava', 'Košice', 'Prešov', 'Žilina', 'Banská Bystrica'];
+                    const randomCity = cities[Math.floor(Math.random() * cities.length)];
+
+                    locationName.textContent = `${randomCity}, Slovakia`;
+                    detectedLocation.classList.add('active');
+
+                    detectLocationBtn.innerHTML = '<i class="fas fa-check"></i> Location Detected';
+                    detectLocationBtn.style.backgroundColor = '#4CAF50';
+                }, 2000);
+            });
+        }
+
+        // Chat functionality
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const sendButton = document.getElementById('send-button');
+
+        // Quick action buttons
+        document.querySelectorAll('.quick-action').forEach(button => {
+            button.addEventListener('click', function() {
+                const action = this.getAttribute('data-action');
+                handleQuickAction(action);
+            });
+        });
+
+        // Send message on button click
+        sendButton.addEventListener('click', sendMessage);
+
+        // Send message on Enter key
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (message === '') return;
+
+            // Add user message
+            addMessage('user', message);
+            chatInput.value = '';
+
+            // Simulate AI response
+            setTimeout(() => {
+                const response = getAIResponse(message);
+                addMessage('ai', response.text, response.quickActions);
+            }, 1000);
+        }
+
+        function addMessage(sender, text, quickActions = null) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message message-${sender}`;
+
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'message-bubble';
+            bubbleDiv.textContent = text;
+
+            if (quickActions && sender === 'ai') {
+                const actionsDiv = document.createElement('div');
+                actionsDiv.className = 'quick-actions';
+
+                quickActions.forEach(action => {
+                    const button = document.createElement('button');
+                    button.className = 'quick-action';
+                    button.textContent = action.label;
+                    button.setAttribute('data-action', action.action);
+                    button.addEventListener('click', function() {
+                        handleQuickAction(action.action);
+                    });
+                    actionsDiv.appendChild(button);
+                });
+
+                bubbleDiv.appendChild(actionsDiv);
+            }
+
+            messageDiv.appendChild(bubbleDiv);
+            chatMessages.appendChild(messageDiv);
+
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function handleQuickAction(action) {
+            let message = '';
+            let quickActions = null;
+
+            switch(action) {
+                case 'choose-bank':
+                    message = 'Help me choose a bank in Slovakia. What should I consider?';
+                    quickActions = [
+                        { label: 'SLSP', action: 'slsp' },
+                        { label: 'VÚB Banka', action: 'vub' },
+                        { label: 'Tatra banka', action: 'tatra' },
+                        { label: 'Other banks', action: 'other-banks' }
+                    ];
+                    break;
+                case 'open-account':
+                    message = 'Tell me about the account opening procedure for foreigners in Slovakia';
+                    quickActions = [
+                        { label: 'Documents', action: 'documents' },
+                        { label: 'Cost', action: 'fees' },
+                        { label: 'Online opening', action: 'online' },
+                        { label: 'Timing', action: 'timing' }
+                    ];
+                    break;
+                case 'documents':
+                    message = 'What documents are needed to open an account in Slovakia?';
+                    break;
+                case 'fees':
+                    message = 'What are the fees and tariffs in Slovak banks?';
+                    break;
+                default:
+                    message = 'Tell me more about ' + action;
+            }
+
+            addMessage('user', message);
+
+            setTimeout(() => {
+                const response = getAIResponse(message);
+                addMessage('ai', response.text, response.quickActions);
+            }, 1000);
+        }
+
+        function getAIResponse(message) {
+            // Simple response logic - in a real app this would call an API
+            const lowerMessage = message.toLowerCase();
+
+            if (lowerMessage.includes('bank') || lowerMessage.includes('choose')) {
+                return {
+                    text: 'When choosing a bank in Slovakia, consider: branch locations, English services, monthly fees, digital banking quality, and international transfer costs. SLSP has the largest branch network, VÚB is good for EU citizens, and Tatra banka offers the best digital experience.',
+                    quickActions: [
+                        { label: 'SLSP', action: 'slsp' },
+                        { label: 'VÚB Banka', action: 'vub' },
+                        { label: 'Tatra banka', action: 'tatra' }
+                    ]
+                };
+            } else if (lowerMessage.includes('document') || lowerMessage.includes('open')) {
+                return {
+                    text: 'To open an account in Slovakia you typically need: valid passport, proof of Slovak address (rental contract), proof of legal stay (visa/residence permit), and sometimes proof of income or employment. Some banks may require an initial deposit.',
+                    quickActions: [
+                        { label: 'SLSP documents', action: 'slsp-docs' },
+                        { label: 'VÚB documents', action: 'vub-docs' },
+                        { label: 'Tatra banka documents', action: 'tatra-docs' }
+                    ]
+                };
+            } else if (lowerMessage.includes('fee') || lowerMessage.includes('tariff')) {
+                return {
+                    text: 'Bank fees in Slovakia vary. Monthly account maintenance is typically €2-5, card issuance €5-10, ATM withdrawals €1-2 (free at own bank ATMs), and international transfers 1-2% of amount. Student accounts often have reduced fees.',
+                    quickActions: [
+                        { label: 'SLSP tariffs', action: 'slsp-tariffs' },
+                        { label: 'VÚB tariffs', action: 'vub-tariffs' },
+                        { label: 'Tatra banka tariffs', action: 'tatra-tariffs' }
+                    ]
+                };
+            } else {
+                return {
+                    text: 'I can help with choosing a bank in Slovakia, opening an account, understanding fees, and other banking questions. What exactly are you interested in?',
+                    quickActions: [
+                        { label: 'Choose a bank', action: 'choose-bank' },
+                        { label: 'Open account', action: 'open-account' },
+                        { label: 'Documents', action: 'documents' },
+                        { label: 'Fees', action: 'fees' }
+                    ]
+                };
+            }
+        }
+    });
+</script>
 </body>
 </html>
