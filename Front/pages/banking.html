@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UrbanMind: Banking in Slovakia</title>
+    <title>UrbanMind: Smart Form Filling</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/banking.css">
@@ -31,9 +31,9 @@
 
     <div class="container hero-content">
         <div class="hero-text fade-in">
-            <h1>Banking in Slovakia Made Easy</h1>
-            <p>Get help opening a bank account in Slovakia. Our AI assistant will guide you through the process and recommend the best banks based on your location and needs.</p>
-            <a href="#location-detection" class="btn-main">Find Banks Near Me</a>
+            <h1>Fill Official Forms Automatically</h1>
+            <p>Upload a blank form and a document with your data. Our AI will fill in the form for you and show any missing fields.</p>
+            <a href="#documents-section" class="btn-main">Start Filling Forms</a>
         </div>
         <div class="robot-container fade-in">
             <div class="robot-bg"></div>
@@ -42,483 +42,378 @@
     </div>
 </section>
 
-<section class="location-detection" id="location-detection">
+<section class="location-detection" id="documents-section">
     <div class="location-bg">
         <div class="location-circle location-circle-1"></div>
         <div class="location-circle location-circle-2"></div>
     </div>
 
     <div class="container">
-        <h2 class="sections-heading">Find Banks in Your Area</h2>
+        <h2 class="sections-heading">Upload Documents</h2>
         <div class="location-content">
-            <div class="location-text fade-in">
-                <h3>We'll help you find the best banking options</h3>
-                <p>Allow location access to see banks near you with services tailored to newcomers. We'll show you branches with English-speaking staff and newcomer-friendly services.</p>
-
-                <div class="detected-location" id="detected-location">
-                    <h4>Detected Location: <span id="location-name">Not detected yet</span></h4>
-                    <p id="location-description">Grant location access to see banks near you.</p>
-                    <ul id="nearby-banks-list"></ul>
-                    <a href="#bank-cards" class="btn-location" id="view-banks-btn" style="display:none;">View Recommended Banks</a>
+            <div class="location-text fade-in" style="flex:1 1 50%;">
+                <div id="upload-card" style="border:2px dashed #cbd5f5;border-radius:18px;padding:2rem 1.5rem;text-align:center;background:#f9fbff;cursor:pointer;">
+                    <i class="fas fa-cloud-upload-alt" style="font-size:2.3rem;color:#4f46e5;margin-bottom:1rem;"></i>
+                    <h3 style="margin:0 0 0.5rem;">Upload Blank Forms</h3>
+                    <p style="margin:0 0 1rem;font-size:0.9rem;color:#64748b;">Drag & drop your documents here or click to browse files</p>
+                    <button id="select-files-btn" class="btn-location" type="button">Select Files</button>
+                    <input id="file-input" type="file" multiple style="display:none;" accept=".txt,.md,.rtf,.html,.pdf,.doc,.docx,.png,.jpg,.jpeg">
                 </div>
 
-                <button class="btn-location" id="detect-location">
-                    <i class="fas fa-map-marker-alt"></i> Detect My Location
-                </button>
-                <p class="location-note">Your location data is processed securely and never stored on our servers.</p>
+                <div id="files-list" style="margin-top:1.5rem;display:flex;flex-direction:column;gap:0.75rem;"></div>
+
+                <div style="margin-top:1.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+                    <button id="fill-docs-btn" class="btn-location" type="button">
+                        <i class="fas fa-magic"></i> Fill Documents Automatically
+                    </button>
+                    <button id="clear-all-btn" class="btn-location" type="button" style="background:#e5e7eb;color:#111827;">
+                        <i class="fas fa-trash"></i> Clear All
+                    </button>
+                    <span id="fill-status" style="font-size:0.85rem;color:#4b5563;"></span>
+                </div>
+                <p class="location-note" style="margin-top:0.75rem;">For best results upload exactly two files: the blank form and your document with personal data.</p>
             </div>
-            <div class="location-visual fade-in">
-                <div class="location-map">
-                    <i class="fas fa-map-marked-alt"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
-<section class="ai-assistant" id="ai-assistant">
-    <div class="ai-assistant-bg">
-        <div class="ai-circle ai-circle-1"></div>
-        <div class="ai-circle ai-circle-2"></div>
-    </div>
-
-    <div class="container">
-        <h2 class="sections-heading">Banking Assistant for Slovakia</h2>
-        <div class="ai-chat-container fade-in">
-            <div class="ai-chat-header">
-                <div class="ai-chat-avatar">
-                    <i class="fas fa-robot"></i>
-                </div>
-                <div class="ai-chat-title">
-                    <h3>Slovak Banking Consultant</h3>
-                    <p>I can help you open a bank account in Slovakia</p>
-                </div>
-            </div>
-            <div class="ai-chat-messages" id="chat-messages">
-                <div class="message message-ai">
-                    <div class="message-bubble">
-                        Hello! I'm your banking assistant for Slovakia. I can help you choose a bank, understand the account opening process, and answer questions about banking services for newcomers. Where shall we start?
-                        <div class="quick-actions">
-                            <button class="quick-action" data-action="choose-bank">Choose a Bank</button>
-                            <button class="quick-action" data-action="open-account">Open Account</button>
-                            <button class="quick-action" data-action="documents">Required Documents</button>
-                            <button class="quick-action" data-action="fees">Fees & Tariffs</button>
+            <div class="location-visual fade-in" style="flex:1 1 50%;display:flex;flex-direction:column;gap:1rem;">
+                <div class="location-map" style="min-height:160px;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;padding:0;">
+                    <div style="padding:1rem 1.5rem;border-bottom:1px solid rgba(148,163,184,0.3);display:flex;justify-content:space-between;align-items:center;">
+                        <div>
+                            <h3 style="margin:0;font-size:1rem;">Document Preview</h3>
+                            <p style="margin:0.25rem 0 0;font-size:0.75rem;color:#6b7280;">Review the filled form and missing fields.</p>
+                        </div>
+                        <span id="preview-count" style="font-size:0.8rem;color:#4b5563;">0 documents</span>
+                    </div>
+                    <div style="flex:1 1 auto;padding:1rem 1.5rem;overflow:auto;">
+                        <pre id="filled-text" style="white-space:pre-wrap;word-wrap:break-word;background:#f8fafc;border-radius:12px;padding:1rem;border:1px dashed #cbd5f5;min-height:220px;font-family:'Poppins',sans-serif;font-size:13px;color:#0f172a;">Waiting for documents...</pre>
+                    </div>
+                    <div style="padding:0.75rem 1.5rem;border-top:1px solid rgba(148,163,184,0.3);display:flex;flex-direction:column;gap:0.5rem;">
+                        <div>
+                            <strong style="font-size:0.85rem;">Missing fields</strong>
+                            <ul id="missing-fields-list" style="margin:0.25rem 0 0;padding-left:1.25rem;font-size:0.8rem;color:#6b7280;"></ul>
+                        </div>
+                        <div>
+                            <strong style="font-size:0.85rem;">Notes</strong>
+                            <p id="notes-text" style="margin:0.25rem 0 0;font-size:0.8rem;color:#6b7280;">No notes yet.</p>
+                        </div>
+                        <div style="margin-top:0.25rem;display:flex;gap:0.75rem;flex-wrap:wrap;">
+                            <button id="copy-filled-btn" class="btn-location" type="button">
+                                <i class="fas fa-copy"></i> Copy Filled Text
+                            </button>
+                            <button id="download-filled-btn" class="btn-location" type="button">
+                                <i class="fas fa-download"></i> Download As TXT
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="ai-chat-input">
-                <input type="text" id="chat-input" placeholder="Ask a question about Slovak banking...">
-                <button id="send-button"><i class="fas fa-paper-plane"></i></button>
-            </div>
         </div>
-    </div>
-</section>
-
-<section class="bank-cards" id="bank-cards">
-    <div class="bank-cards-bg">
-        <div class="bank-circle bank-circle-1"></div>
-        <div class="bank-circle bank-circle-2"></div>
-    </div>
-
-    <div class="container">
-        <h2 class="sections-heading">Popular Banks Near You</h2>
-        <div class="bank-cards-grid" id="bank-cards-grid"></div>
-    </div>
-</section>
-
-<section class="account-opening" id="account-opening">
-    <div class="account-opening-bg">
-        <div class="account-circle account-circle-1"></div>
-        <div class="account-circle account-circle-2"></div>
-    </div>
-
-    <div class="container">
-        <h2 class="sections-heading">How to Open a Bank Account</h2>
-        <div class="steps-container" id="steps-container"></div>
     </div>
 </section>
 
 <footer class="footer">
     <div class="container">
-        <h2>Start Your Banking Journey</h2>
-        <p>Open an account at a local bank and enjoy all the benefits of modern banking. Our assistant is always ready to answer your questions.</p>
-        <a href="#ai-assistant" class="btn-footer">Ask the Assistant</a>
+        <h2>Let AI Handle Your Paperwork</h2>
+        <p>Stop rewriting the same data again and again. Upload your documents once and let UrbanMind fill the forms for you.</p>
+        <a href="#documents-section" class="btn-footer">Try Now</a>
     </div>
 </footer>
 
 <script>
+    console.log('banking page script loaded');
+
     fetch('/header.html')
         .then(function(response) {
             if (!response.ok) {
-                throw new Error('HTTP error ' + response.status)
+                throw new Error('HTTP error ' + response.status);
             }
-            return response.text()
+            return response.text();
         })
         .then(function(html) {
-            document.getElementById('header-container').innerHTML = html
+            document.getElementById('header-container').innerHTML = html;
         })
         .catch(function(error) {
             document.getElementById('header-container').innerHTML =
-                '<div style="color: red;">Error loading header: ' + error.message + '</div>'
-        })
+                '<div style="color: red;">Error loading header: ' + error.message + '</div>';
+        });
 
-    document.addEventListener('DOMContentLoaded', function() {
-        var mobileMenuBtn = document.getElementById('mobile-menu-btn')
-        var navMenu = document.getElementById('nav-menu')
-        if (mobileMenuBtn) {
+    (function() {
+        console.log('init banking page logic');
+
+        var mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        var navMenu = document.getElementById('nav-menu');
+        if (mobileMenuBtn && navMenu) {
             mobileMenuBtn.addEventListener('click', function() {
-                navMenu.classList.toggle('active')
-            })
+                navMenu.classList.toggle('active');
+            });
         }
 
-        var detectLocationBtn = document.getElementById('detect-location')
-        var detectedLocation = document.getElementById('detected-location')
-        var locationName = document.getElementById('location-name')
-        var locationDescription = document.getElementById('location-description')
-        var nearbyBanksList = document.getElementById('nearby-banks-list')
-        var viewBanksBtn = document.getElementById('view-banks-btn')
-        var bankCardsGrid = document.getElementById('bank-cards-grid')
-        var stepsContainer = document.getElementById('steps-container')
+        var fileInput = document.getElementById('file-input');
+        var selectFilesBtn = document.getElementById('select-files-btn');
+        var uploadCard = document.getElementById('upload-card');
+        var filesList = document.getElementById('files-list');
+        var fillDocsBtn = document.getElementById('fill-docs-btn');
+        var clearAllBtn = document.getElementById('clear-all-btn');
+        var fillStatus = document.getElementById('fill-status');
+        var filledText = document.getElementById('filled-text');
+        var missingFieldsList = document.getElementById('missing-fields-list');
+        var notesText = document.getElementById('notes-text');
+        var copyFilledBtn = document.getElementById('copy-filled-btn');
+        var downloadFilledBtn = document.getElementById('download-filled-btn');
+        var previewCount = document.getElementById('preview-count');
 
-        function iconToClass(icon) {
-            var key = (icon || '').toLowerCase()
-            if (key === 'piggy-bank') return 'fa-piggy-bank'
-            if (key === 'landmark') return 'fa-landmark'
-            if (key === 'building') return 'fa-building'
-            return 'fa-university'
+        console.log('elements:', {
+            fileInput: !!fileInput,
+            selectFilesBtn: !!selectFilesBtn,
+            uploadCard: !!uploadCard,
+            fillDocsBtn: !!fillDocsBtn,
+            clearAllBtn: !!clearAllBtn
+        });
+
+        var uploadedFiles = [];
+
+        function renderFiles() {
+            filesList.innerHTML = '';
+            if (!uploadedFiles.length) {
+                previewCount.textContent = '0 documents';
+                return;
+            }
+            previewCount.textContent = uploadedFiles.length + ' document' + (uploadedFiles.length > 1 ? 's' : '');
+            uploadedFiles.forEach(function(file, idx) {
+                var row = document.createElement('div');
+                row.style.display = 'flex';
+                row.style.alignItems = 'center';
+                row.style.justifyContent = 'space-between';
+                row.style.padding = '0.75rem 1rem';
+                row.style.borderRadius = '12px';
+                row.style.background = '#f9fafb';
+
+                var left = document.createElement('div');
+                left.style.display = 'flex';
+                left.style.alignItems = 'center';
+                left.style.gap = '0.75rem';
+
+                var iconBox = document.createElement('div');
+                iconBox.style.width = '32px';
+                iconBox.style.height = '32px';
+                iconBox.style.borderRadius = '10px';
+                iconBox.style.background = '#22c55e';
+                iconBox.style.display = 'flex';
+                iconBox.style.alignItems = 'center';
+                iconBox.style.justifyContent = 'center';
+                iconBox.style.color = 'white';
+                var icon = document.createElement('i');
+                icon.className = 'fas fa-file-alt';
+                iconBox.appendChild(icon);
+
+                var info = document.createElement('div');
+                var title = document.createElement('div');
+                title.textContent = file.name;
+                title.style.fontSize = '0.86rem';
+                title.style.fontWeight = '500';
+                var size = document.createElement('div');
+                size.style.fontSize = '0.75rem';
+                size.style.color = '#6b7280';
+                size.textContent = Math.round(file.size / 1024) + ' KB';
+                info.appendChild(title);
+                info.appendChild(size);
+
+                left.appendChild(iconBox);
+                left.appendChild(info);
+
+                var right = document.createElement('button');
+                right.textContent = 'Remove';
+                right.style.border = 'none';
+                right.style.borderRadius = '999px';
+                right.style.padding = '0.2rem 0.7rem';
+                right.style.fontSize = '0.75rem';
+                right.style.background = '#fee2e2';
+                right.style.color = '#b91c1c';
+                right.style.cursor = 'pointer';
+                right.addEventListener('click', function() {
+                    uploadedFiles.splice(idx, 1);
+                    renderFiles();
+                });
+
+                row.appendChild(left);
+                row.appendChild(right);
+                filesList.appendChild(row);
+            });
         }
 
-        function renderStars(container, rating) {
-            container.innerHTML = ''
-            var full = Math.floor(rating)
-            var half = rating - full >= 0.25 && rating - full < 0.75
-            var total = half ? full + 1 : full
-            for (var i = 0; i < full && i < 5; i++) {
-                var s = document.createElement('i')
-                s.className = 'fas fa-star'
-                container.appendChild(s)
+        function handleFiles(files) {
+            for (var i = 0; i < files.length; i++) {
+                uploadedFiles.push(files[i]);
             }
-            if (half && total <= 5) {
-                var h = document.createElement('i')
-                h.className = 'fas fa-star-half-alt'
-                container.appendChild(h)
-            }
-            while (container.children.length < 5) {
-                var e = document.createElement('i')
-                e.className = 'far fa-star'
-                container.appendChild(e)
-            }
+            console.log('files added:', uploadedFiles.map(function(f) { return f.name; }));
+            renderFiles();
         }
 
-        function updateUIWithBankingInfo(data) {
-            var city = data.city || ''
-            var countryName = data.country_name || ''
-            if (city) {
-                locationName.textContent = city + ', ' + countryName
+        if (selectFilesBtn && fileInput) {
+            selectFilesBtn.addEventListener('click', function() {
+                console.log('select files clicked');
+                fileInput.click();
+            });
+            fileInput.addEventListener('change', function() {
+                if (fileInput.files && fileInput.files.length) {
+                    console.log('file input change, count=', fileInput.files.length);
+                    handleFiles(fileInput.files);
+                    fileInput.value = '';
+                }
+            });
+        }
+
+        if (uploadCard) {
+            uploadCard.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                uploadCard.style.background = '#eef2ff';
+            });
+            uploadCard.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                uploadCard.style.background = '#f9fbff';
+            });
+            uploadCard.addEventListener('drop', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                uploadCard.style.background = '#f9fbff';
+                if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) {
+                    console.log('files dropped, count=', e.dataTransfer.files.length);
+                    handleFiles(e.dataTransfer.files);
+                }
+            });
+        }
+
+        function setLoading(isLoading, count) {
+            if (isLoading) {
+                fillDocsBtn.disabled = true;
+                clearAllBtn.disabled = true;
+                fillDocsBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Filling...';
+                fillStatus.style.color = '#2563eb';
+                var c = count || uploadedFiles.length || 0;
+                fillStatus.textContent = 'Processing ' + c + ' document' + (c !== 1 ? 's' : '') + '...';
+                filledText.textContent = 'Processing ' + c + ' document' + (c !== 1 ? 's' : '') + '...';
             } else {
-                locationName.textContent = countryName
+                fillDocsBtn.disabled = false;
+                clearAllBtn.disabled = false;
+                fillDocsBtn.innerHTML = '<i class="fas fa-magic"></i> Fill Documents Automatically';
             }
-            locationDescription.textContent = 'Based on your location, we recommend these banks with branches nearby:'
-            nearbyBanksList.innerHTML = ''
-            data.banks.forEach(function(bank) {
-                var li = document.createElement('li')
-                var strong = document.createElement('strong')
-                strong.textContent = bank.name
-                li.appendChild(strong)
-                var text = ' - '
-                if (bank.branches_nearby) {
-                    text += bank.branches_nearby
-                } else if (bank.tagline) {
-                    text += bank.tagline
-                }
-                li.appendChild(document.createTextNode(text))
-                nearbyBanksList.appendChild(li)
-            })
-            detectedLocation.classList.add('active')
-            viewBanksBtn.style.display = data.banks.length ? 'inline-block' : 'none'
-
-            bankCardsGrid.innerHTML = ''
-            data.banks.forEach(function(bank) {
-                var card = document.createElement('div')
-                card.className = 'bank-card fade-in'
-
-                var header = document.createElement('div')
-                header.className = 'bank-card-header'
-
-                var logo = document.createElement('div')
-                logo.className = 'bank-logo'
-                var icon = document.createElement('i')
-                icon.className = 'fas ' + iconToClass(bank.icon)
-                logo.appendChild(icon)
-
-                var info = document.createElement('div')
-                info.className = 'bank-info'
-                var h3 = document.createElement('h3')
-                h3.textContent = bank.name
-                var p = document.createElement('p')
-                p.textContent = bank.tagline
-                info.appendChild(h3)
-                info.appendChild(p)
-
-                header.appendChild(logo)
-                header.appendChild(info)
-                card.appendChild(header)
-
-                var featuresBox = document.createElement('div')
-                featuresBox.className = 'bank-features'
-                bank.features.forEach(function(f) {
-                    var feat = document.createElement('div')
-                    feat.className = 'bank-feature'
-                    var ic = document.createElement('i')
-                    ic.className = 'fas fa-check'
-                    var span = document.createElement('span')
-                    span.textContent = f
-                    feat.appendChild(ic)
-                    feat.appendChild(span)
-                    featuresBox.appendChild(feat)
-                })
-                card.appendChild(featuresBox)
-
-                var footer = document.createElement('div')
-                footer.className = 'bank-card-footer'
-                var ratingBox = document.createElement('div')
-                ratingBox.className = 'bank-rating'
-                var stars = document.createElement('div')
-                stars.className = 'stars'
-                renderStars(stars, bank.rating_value || 0)
-                var ratingText = document.createElement('div')
-                ratingText.className = 'rating-text'
-                ratingText.textContent = bank.rating_text || ''
-                ratingBox.appendChild(stars)
-                ratingBox.appendChild(ratingText)
-
-                var link = document.createElement('a')
-                link.className = 'btn-bank'
-                link.textContent = 'Learn More'
-                if (bank.url) {
-                    link.href = bank.url
-                    link.target = '_blank'
-                    link.rel = 'noopener noreferrer'
-                } else {
-                    link.href = '#'
-                }
-
-                footer.appendChild(ratingBox)
-                footer.appendChild(link)
-                card.appendChild(footer)
-
-                bankCardsGrid.appendChild(card)
-            })
-
-            stepsContainer.innerHTML = ''
-            data.steps.forEach(function(step) {
-                var card = document.createElement('div')
-                card.className = 'step-card fade-in'
-                var num = document.createElement('div')
-                num.className = 'step-number'
-                num.textContent = step.number
-                var t = document.createElement('h3')
-                t.textContent = step.title
-                var d = document.createElement('p')
-                d.textContent = step.description
-                card.appendChild(num)
-                card.appendChild(t)
-                card.appendChild(d)
-                stepsContainer.appendChild(card)
-            })
         }
 
-        function requestBankingInfo(payload) {
-            return fetch('/api/get_banking_info', {
+        function callFillForm() {
+            console.log('callFillForm invoked, uploadedFiles.length=', uploadedFiles.length);
+            if (uploadedFiles.length < 2) {
+                fillStatus.style.color = '#b91c1c';
+                fillStatus.textContent = 'Upload at least two documents: blank form and your document.';
+                return;
+            }
+            var first = uploadedFiles[0];
+            var second = uploadedFiles[1];
+            console.log('sending files to backend:', first.name, second.name);
+            setLoading(true, 2);
+
+            var formData = new FormData();
+            formData.append('template_file', first);
+            formData.append('user_document_file', second);
+            formData.append('language', 'en');
+
+            fetch('/api/fill_form', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            }).then(function(res) {
-                if (!res.ok) {
-                    throw new Error('HTTP error ' + res.status)
-                }
-                return res.json()
+                body: formData
             })
-        }
-
-        function detectAndLoad() {
-            detectLocationBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Detecting Location...'
-            detectLocationBtn.disabled = true
-            var payload = {language: 'en'}
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function(pos) {
-                        payload.latitude = pos.coords.latitude
-                        payload.longitude = pos.coords.longitude
-                        requestBankingInfo(payload)
-                            .then(function(data) {
-                                updateUIWithBankingInfo(data)
-                                detectLocationBtn.innerHTML = '<i class="fas fa-check"></i> Location Detected'
-                                detectLocationBtn.style.backgroundColor = '#4CAF50'
-                            })
-                            .catch(function() {
-                                detectLocationBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error'
-                            })
-                    },
-                    function() {
-                        requestBankingInfo(payload)
-                            .then(function(data) {
-                                updateUIWithBankingInfo(data)
-                                detectLocationBtn.innerHTML = '<i class="fas fa-check"></i> Location Detected'
-                                detectLocationBtn.style.backgroundColor = '#4CAF50'
-                            })
-                            .catch(function() {
-                                detectLocationBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error'
-                            })
+                .then(function(res) {
+                    console.log('response from /api/fill_form status=', res.status);
+                    if (!res.ok) {
+                        throw new Error('HTTP error ' + res.status);
                     }
-                )
-            } else {
-                requestBankingInfo(payload)
-                    .then(function(data) {
-                        updateUIWithBankingInfo(data)
-                        detectLocationBtn.innerHTML = '<i class="fas fa-check"></i> Location Detected'
-                        detectLocationBtn.style.backgroundColor = '#4CAF50'
-                    })
-                    .catch(function() {
-                        detectLocationBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error'
-                    })
-            }
-        }
-
-        if (detectLocationBtn) {
-            detectLocationBtn.addEventListener('click', detectAndLoad)
-        }
-
-        var chatMessages = document.getElementById('chat-messages')
-        var chatInput = document.getElementById('chat-input')
-        var sendButton = document.getElementById('send-button')
-
-        document.querySelectorAll('.quick-action').forEach(function(button) {
-            button.addEventListener('click', function() {
-                var action = this.getAttribute('data-action')
-                handleQuickAction(action)
-            })
-        })
-
-        if (sendButton) {
-            sendButton.addEventListener('click', sendMessage)
-        }
-        if (chatInput) {
-            chatInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    sendMessage()
-                }
-            })
-        }
-
-        function addMessage(sender, text, quickActions) {
-            var messageDiv = document.createElement('div')
-            messageDiv.className = 'message message-' + sender
-            var bubbleDiv = document.createElement('div')
-            bubbleDiv.className = 'message-bubble'
-            bubbleDiv.textContent = text
-            if (quickActions && sender === 'ai') {
-                var actionsDiv = document.createElement('div')
-                actionsDiv.className = 'quick-actions'
-                quickActions.forEach(function(action) {
-                    var button = document.createElement('button')
-                    button.className = 'quick-action'
-                    button.textContent = action.label
-                    button.setAttribute('data-action', action.action)
-                    button.addEventListener('click', function() {
-                        handleQuickAction(action.action)
-                    })
-                    actionsDiv.appendChild(button)
+                    return res.json();
                 })
-                bubbleDiv.appendChild(actionsDiv)
-            }
-            messageDiv.appendChild(bubbleDiv)
-            chatMessages.appendChild(messageDiv)
-            chatMessages.scrollTop = chatMessages.scrollHeight
+                .then(function(data) {
+                    console.log('data from backend:', data);
+                    filledText.textContent = data.filled_text || '';
+                    missingFieldsList.innerHTML = '';
+                    if (data.missing_fields && data.missing_fields.length) {
+                        data.missing_fields.forEach(function(field) {
+                            var li = document.createElement('li');
+                            li.textContent = field;
+                            missingFieldsList.appendChild(li);
+                        });
+                    } else {
+                        var li = document.createElement('li');
+                        li.textContent = 'No obvious missing fields detected.';
+                        missingFieldsList.appendChild(li);
+                    }
+                    if (data.notes) {
+                        notesText.textContent = data.notes;
+                    } else {
+                        notesText.textContent = 'The form was filled based on the available data.';
+                    }
+                    fillStatus.style.color = '#16a34a';
+                    fillStatus.textContent = 'Completed. Review the result on the right.';
+                    previewCount.textContent = '1 document';
+                })
+                .catch(function(err) {
+                    console.error('error in fetch /api/fill_form:', err);
+                    fillStatus.style.color = '#b91c1c';
+                    fillStatus.textContent = 'Error: ' + err.message;
+                    filledText.textContent = 'An error occurred while filling the form.';
+                })
+                .finally(function() {
+                    setLoading(false);
+                });
         }
 
-        function getAIResponse(message) {
-            var lowerMessage = message.toLowerCase()
-            if (lowerMessage.indexOf('bank') !== -1 || lowerMessage.indexOf('choose') !== -1) {
-                return {
-                    text: 'When choosing a bank, consider branch locations, English services, monthly fees, digital banking quality, and international transfer costs. Large national banks and digital banks can both be good options.',
-                    quickActions: [
-                        { label: 'Documents', action: 'documents' },
-                        { label: 'Fees', action: 'fees' }
-                    ]
-                }
-            } else if (lowerMessage.indexOf('document') !== -1 || lowerMessage.indexOf('open') !== -1) {
-                return {
-                    text: 'To open an account you typically need a valid passport, proof of address, proof of legal stay, and sometimes proof of income or student status. Some banks allow starting the process online.',
-                    quickActions: [
-                        { label: 'Fees', action: 'fees' },
-                        { label: 'Visit branch', action: 'visit' }
-                    ]
-                }
-            } else if (lowerMessage.indexOf('fee') !== -1 || lowerMessage.indexOf('tariff') !== -1) {
-                return {
-                    text: 'Account fees vary, but basic accounts usually have low monthly fees and free cards. Digital-only banks may offer cheaper international payments.',
-                    quickActions: [
-                        { label: 'Choose a bank', action: 'choose-bank' },
-                        { label: 'Open account', action: 'open-account' }
-                    ]
-                }
-            } else {
-                return {
-                    text: 'I can help with choosing a bank, opening an account, understanding fees, and other banking questions. What exactly are you interested in?',
-                    quickActions: [
-                        { label: 'Choose a bank', action: 'choose-bank' },
-                        { label: 'Open account', action: 'open-account' },
-                        { label: 'Documents', action: 'documents' },
-                        { label: 'Fees', action: 'fees' }
-                    ]
-                }
-            }
+        if (fillDocsBtn) {
+            console.log('binding click handler to fillDocsBtn');
+            fillDocsBtn.addEventListener('click', function() {
+                console.log('fillDocsBtn clicked');
+                callFillForm();
+            });
+        } else {
+            console.log('fillDocsBtn not found');
         }
 
-        function sendMessage() {
-            var message = chatInput.value.trim()
-            if (!message) return
-            addMessage('user', message)
-            chatInput.value = ''
-            setTimeout(function() {
-                var response = getAIResponse(message)
-                addMessage('ai', response.text, response.quickActions)
-            }, 600)
+        if (clearAllBtn) {
+            clearAllBtn.addEventListener('click', function() {
+                console.log('clearAll clicked');
+                uploadedFiles = [];
+                renderFiles();
+                filledText.textContent = 'Waiting for documents...';
+                missingFieldsList.innerHTML = '';
+                notesText.textContent = 'No notes yet.';
+                fillStatus.textContent = '';
+            });
         }
 
-        function handleQuickAction(action) {
-            var message
-            var quickActions = null
-            if (action === 'choose-bank') {
-                message = 'Help me choose a bank.'
-                quickActions = [
-                    { label: 'Documents', action: 'documents' },
-                    { label: 'Fees', action: 'fees' }
-                ]
-            } else if (action === 'open-account') {
-                message = 'Tell me about the account opening procedure for foreigners.'
-                quickActions = [
-                    { label: 'Documents', action: 'documents' },
-                    { label: 'Visit branch', action: 'visit' }
-                ]
-            } else if (action === 'documents') {
-                message = 'What documents are needed to open an account?'
-            } else if (action === 'fees') {
-                message = 'What are the typical bank fees?'
-            } else {
-                message = 'Tell me more about ' + action
-            }
-            addMessage('user', message)
-            setTimeout(function() {
-                var response = getAIResponse(message)
-                addMessage('ai', response.text, response.quickActions)
-            }, 600)
+        if (copyFilledBtn) {
+            copyFilledBtn.addEventListener('click', function() {
+                var text = filledText.textContent || '';
+                if (!text) return;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(function() {
+                        fillStatus.style.color = '#16a34a';
+                        fillStatus.textContent = 'Filled text copied to clipboard.';
+                    }).catch(function() {});
+                }
+            });
         }
-    })
+
+        if (downloadFilledBtn) {
+            downloadFilledBtn.addEventListener('click', function() {
+                var text = filledText.textContent || '';
+                if (!text) return;
+                var blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = 'filled_form.txt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+        }
+    })();
 </script>
 </body>
 </html>
