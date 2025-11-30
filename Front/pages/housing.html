@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Housing & Living - UrbanMind</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/housing.css">
+</head>
+<body>
+
+<div id="header-container"></div>
+
+
+<section class="hero" id="home">
+    <div class="hero-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="container hero-content">
+        <div class="hero-text fade-in">
+            <h1>Find Your Perfect Home</h1>
+            <p>Discover housing options that match your needs and budget with our AI-powered housing assistant. We'll help you find the perfect place to live in your new city.</p>
+            <a href="#rental-sites" class="btn-main">Find Rental Sites</a>
+        </div>
+        <div class="robot-container fade-in">
+            <div class="robot-bg"></div>
+            <img src="../img/home.png" alt="AI Housing Assistant" class="robot-image">
+        </div>
+    </div>
+</section>
+
+<section class="rental-sites-section" id="rental-sites">
+    <div class="container">
+        <h2 class="sections-heading">Rental Websites in Your Country</h2>
+
+        <div class="location-detection fade-in">
+            <h3>Find Rental Websites Based on Your Location</h3>
+            <p>We'll automatically detect your country to show the most popular rental websites in your area.</p>
+
+            <div class="location-status detecting">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Detecting your location...</span>
+            </div>
+
+            <div class="country-selector">
+                <p>Or select your country manually:</p>
+                <select id="country-select">
+                    <option value="">Select a country</option>
+                    <option value="sk">Slovakia</option>
+                    <option value="cz">Czech Republic</option>
+                    <option value="pl">Poland</option>
+                    <option value="hu">Hungary</option>
+                    <option value="at">Austria</option>
+                    <option value="de">Germany</option>
+                    <option value="fr">France</option>
+                    <option value="uk">United Kingdom</option>
+                    <option value="us">United States</option>
+                </select>
+                <button id="update-location">Update Location</button>
+            </div>
+        </div>
+
+        <div class="rental-sites-container">
+            <h3 class="sections-heading">Recommended Rental Websites</h3>
+            <div class="rental-sites-grid" id="rental-sites-grid">
+                <!-- Rental sites will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="living-assistance">
+    <div class="container">
+        <h2 class="sections-heading">Living Assistance</h2>
+        <div class="assistance-grid">
+            <div class="assistance-card fade-in">
+                <div class="assistance-icon">
+                    <i class="fas fa-file-contract"></i>
+                </div>
+                <h3>Rental Contracts</h3>
+                <p>Help with understanding and negotiating rental agreements and contracts.</p>
+            </div>
+
+            <div class="assistance-card fade-in">
+                <div class="assistance-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h3>Utilities Setup</h3>
+                <p>Guidance on setting up electricity, water, internet and other utilities.</p>
+            </div>
+
+            <div class="assistance-card fade-in">
+                <div class="assistance-icon">
+                    <i class="fas fa-map-marked-alt"></i>
+                </div>
+                <h3>Neighborhood Guide</h3>
+                <p>Information about neighborhoods, safety, amenities and transportation.</p>
+            </div>
+
+            <div class="assistance-card fade-in">
+                <div class="assistance-icon">
+                    <i class="fas fa-hand-holding-usd"></i>
+                </div>
+                <h3>Financial Advice</h3>
+                <p>Budget planning and understanding rental costs in your new city.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="features" id="features">
+    <div class="features-bg">
+        <div class="features-circle features-circle-1"></div>
+        <div class="features-circle features-circle-2"></div>
+    </div>
+
+    <div class="container">
+        <h2 class="sections-heading">How Our Housing Service Works</h2>
+        <div class="features-grid">
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3>Smart Search</h3>
+                <p>Our AI analyzes thousands of listings to find properties that match your preferences, budget and lifestyle.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-euro-sign"></i>
+                </div>
+                <h3>Price Analysis</h3>
+                <p>Get insights on fair market prices and avoid overpaying for your rental or purchase.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <h3>Location Intelligence</h3>
+                <p>Find the best neighborhoods based on your commute, amenities, and lifestyle preferences.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h3>Rental Assistance</h3>
+                <p>Get help with contracts, negotiations, and understanding your rights as a tenant.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <h2>Start Your New Life Today</h2>
+        <p>Join thousands who have found their perfect home with UrbanMind's intelligent housing assistance.</p>
+        <a href="#rental-sites" class="btn-footer">Find Your Home</a>
+    </div>
+</footer>
+
+<script>
+
+    // Rental websites database by country
+    const rentalSitesByCountry = {
+        'sk': [
+            {
+                name: 'Reality.sk',
+                description: 'Largest real estate portal in Slovakia with thousands of rental listings.',
+                url: 'https://www.reality.sk',
+                icon: 'fas fa-home'
+            },
+            {
+                name: 'Nehnuteľnosti.sk',
+                description: 'Popular platform for apartments and houses for rent across Slovakia.',
+                url: 'https://www.nehnutelnosti.sk',
+                icon: 'fas fa-building'
+            },
+            {
+                name: 'Bazos.sk',
+                description: 'Classified ads website with rental listings from private owners.',
+                url: 'https://www.bazos.sk',
+                icon: 'fas fa-list'
+            },
+            {
+                name: 'Facebook Marketplace',
+                description: 'Find rental offers directly from property owners and agencies.',
+                url: 'https://www.facebook.com/marketplace',
+                icon: 'fab fa-facebook'
+            }
+        ],
+        'cz': [
+            {
+                name: 'Sreality.cz',
+                description: 'Leading Czech real estate portal with extensive rental database.',
+                url: 'https://www.sreality.cz',
+                icon: 'fas fa-home'
+            },
+            {
+                name: 'Bezrealitky.cz',
+                description: 'Direct rentals from owners without agency commissions.',
+                url: 'https://www.bezrealitky.cz',
+                icon: 'fas fa-user'
+            },
+            {
+                name: 'Reality.idnes.cz',
+                description: 'Real estate section of major Czech news portal.',
+                url: 'https://reality.idnes.cz',
+                icon: 'fas fa-newspaper'
+            }
+        ],
+        'pl': [
+            {
+                name: 'Olx.pl',
+                description: 'Popular classifieds platform with extensive rental listings.',
+                url: 'https://www.olx.pl',
+                icon: 'fas fa-list'
+            },
+            {
+                name: 'Gratka.pl',
+                description: 'One of the largest real estate portals in Poland.',
+                url: 'https://www.gratka.pl',
+                icon: 'fas fa-home'
+            },
+            {
+                name: 'Otodom.pl',
+                description: 'Professional real estate platform with verified listings.',
+                url: 'https://www.otodom.pl',
+                icon: 'fas fa-building'
+            }
+        ],
+        'hu': [
+            {
+                name: 'Ingatlan.com',
+                description: 'Hungary\'s most visited real estate website.',
+                url: 'https://ingatlan.com',
+                icon: 'fas fa-home'
+            },
+            {
+                name: 'Jofogas.hu',
+                description: 'Classified ads site with rental properties across Hungary.',
+                url: 'https://www.jofogas.hu',
+                icon: 'fas fa-list'
+            }
+        ],
+        'de': [
+            {
+                name: 'ImmobilienScout24',
+                description: 'Germany\'s largest real estate platform.',
+                url: 'https://www.immobilienscout24.de',
+                icon: 'fas fa-home'
+            },
+            {
+                name: 'WG-Gesucht',
+                description: 'Popular platform for shared apartments and rooms.',
+                url: 'https://www.wg-gesucht.de',
+                icon: 'fas fa-users'
+            },
+            {
+                name: 'Immonet.de',
+                description: 'Comprehensive real estate portal with rental listings.',
+                url: 'https://www.immonet.de',
+                icon: 'fas fa-building'
+            }
+        ],
+        'fr': [
+            {
+                name: 'Leboncoin.fr',
+                description: 'France\'s leading classified ads website.',
+                url: 'https://www.leboncoin.fr',
+                icon: 'fas fa-list'
+            },
+            {
+                name: 'Seloger.com',
+                description: 'Major French real estate platform for rentals and sales.',
+                url: 'https://www.seloger.com',
+                icon: 'fas fa-home'
+            },
+            {
+                name: 'PAP.fr',
+                description: 'Popular rental platform particularly in Paris.',
+                url: 'https://www.pap.fr',
+                icon: 'fas fa-building'
+            }
+        ],
+        'uk': [
+            {
+                name: 'Rightmove',
+                description: 'UK\'s largest property website with extensive rental listings.',
+                url: 'https://www.rightmove.co.uk',
+                icon: 'fas fa-home'
+            },
+            {
+                name: 'Zoopla',
+                description: 'Popular UK property portal with rental properties.',
+                url: 'https://www.zoopla.co.uk',
+                icon: 'fas fa-building'
+            },
+            {
+                name: 'Spareroom',
+                description: 'Leading platform for room rentals and shared housing.',
+                url: 'https://www.spareroom.co.uk',
+                icon: 'fas fa-users'
+            }
+        ],
+        'us': [
+            {
+                name: 'Zillow',
+                description: 'Comprehensive US real estate marketplace with rentals.',
+                url: 'https://www.zillow.com',
+                icon: 'fas fa-home'
+            },
+            {
+                name: 'Apartments.com',
+                description: 'Extensive database of apartment rentals across the US.',
+                url: 'https://www.apartments.com',
+                icon: 'fas fa-building'
+            },
+            {
+                name: 'Craigslist',
+                description: 'Local classifieds with rental listings from private owners.',
+                url: 'https://www.craigslist.org',
+                icon: 'fas fa-list'
+            },
+            {
+                name: 'Realtor.com',
+                description: 'Official site of the National Association of Realtors.',
+                url: 'https://www.realtor.com',
+                icon: 'fas fa-user-tie'
+            }
+        ]
+    };
+
+    // Country names for display
+    const countryNames = {
+        'sk': 'Slovakia',
+        'cz': 'Czech Republic',
+        'pl': 'Poland',
+        'hu': 'Hungary',
+        'at': 'Austria',
+        'de': 'Germany',
+        'fr': 'France',
+        'uk': 'United Kingdom',
+        'us': 'United States'
+    };
+
+    // DOM elements
+    const locationStatus = document.querySelector('.location-status');
+    const countrySelect = document.getElementById('country-select');
+    const updateLocationBtn = document.getElementById('update-location');
+    const rentalSitesGrid = document.getElementById('rental-sites-grid');
+
+    // Function to update rental sites based on country
+    function updateRentalSites(countryCode) {
+        // Clear current rental sites
+        rentalSitesGrid.innerHTML = '';
+
+        // Get rental sites for the selected country
+        const rentalSites = rentalSitesByCountry[countryCode] || [];
+
+        if (rentalSites.length === 0) {
+            rentalSitesGrid.innerHTML = '<p style="text-align: center; padding: 40px; color: var(--color-light-text);">No rental sites available for this country. Please try another country.</p>';
+            return;
+        }
+
+        // Update location status
+        locationStatus.className = 'location-status detected';
+        locationStatus.innerHTML = `
+                <i class="fas fa-check-circle"></i>
+                <span>Showing rental sites for: <span class="detected-location">${countryNames[countryCode]}</span></span>
+            `;
+
+        // Add rental site cards
+        rentalSites.forEach(site => {
+            const rentalSiteCard = document.createElement('div');
+            rentalSiteCard.className = 'rental-site-card fade-in';
+            rentalSiteCard.innerHTML = `
+                    <div class="rental-site-icon">
+                        <i class="${site.icon}"></i>
+                    </div>
+                    <h3>${site.name}</h3>
+                    <p>${site.description}</p>
+                    <a href="${site.url}" target="_blank" class="rental-site-link">Visit Site</a>
+                `;
+            rentalSitesGrid.appendChild(rentalSiteCard);
+        });
+    }
+
+    // Function to detect user's location
+    function detectLocation() {
+        // In a real implementation, this would use a geolocation API
+        // For demo purposes, we'll simulate detection with a random country
+        const countries = Object.keys(rentalSitesByCountry);
+        const randomCountry = countries[Math.floor(Math.random() * countries.length)];
+
+        // Simulate API delay
+        setTimeout(() => {
+            updateRentalSites(randomCountry);
+            countrySelect.value = randomCountry;
+        }, 2000);
+    }
+
+    // Event listeners
+    updateLocationBtn.addEventListener('click', () => {
+        const selectedCountry = countrySelect.value;
+        if (selectedCountry) {
+            updateRentalSites(selectedCountry);
+        } else {
+            alert('Please select a country first.');
+        }
+    });
+
+    // Initialize with all properties and detect location
+    detectLocation();
+
+    // Mobile menu functionality
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navMenu = document.querySelector('.nav-menu');
+
+    mobileMenuBtn.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+        mobileMenuBtn.innerHTML = navMenu.classList.contains('active')
+            ? '<i class="fas fa-times"></i>'
+            : '<i class="fas fa-bars"></i>';
+    });
+
+
+
+</script>
+
+<script>
+    fetch('/header.html')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.text();
+        })
+        .then(html => {
+            document.getElementById('header-container').innerHTML = html;
+        })
+        .catch(error => {
+            document.getElementById('header-container').innerHTML =
+                `<div style="color: red;">Error loading header: ${error.message}</div>`;
+        });
+</script>
+</body>
+</html>
