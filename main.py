@@ -18,6 +18,7 @@ from back.translation_api import router as translation_router
 from back.language_backend import router as language_router
 from back.culture_router import router as culture_router
 from back.chat_backend import router as chat_router
+from back.offices_back import router as offices_router
 
 app = FastAPI()
 
@@ -79,9 +80,10 @@ async def language():
 async def official():
     return FileResponse(pages_dir / "official.html")
 
-@app.get("/housing")
-async def housing():
-    return FileResponse(pages_dir / "housing.html")
+
+
+
+
 
 
 app.mount("/css", StaticFiles(directory=front_dir / "css"), name="css")
@@ -106,6 +108,7 @@ app.include_router(translation_router)
 app.include_router(language_router, prefix="/api/language")
 app.include_router(culture_router, prefix="/api/culture")
 app.include_router(chat_router, prefix="/api")
+app.include_router(offices_router, prefix="/api")
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
