@@ -98,6 +98,12 @@ async def banking():
     return FileResponse(pages_dir / "banking.html")
 
 
+@app.get("/legal")
+async def legal():
+    return FileResponse(pages_dir / "legal.html")
+
+
+
 
 
 app.mount("/css", StaticFiles(directory=front_dir / "css"), name="css")
