@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UrbanMind: Legal Documents Assistance</title>
+    <title>UrbanMind: Document Filling Assistant</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/legal.css">
@@ -19,250 +19,84 @@
 
     <div class="container hero-content">
         <div class="hero-text fade-in">
-            <h1>Legal Documents Assistance</h1>
-            <p>Find, understand, and complete migration documents with our comprehensive guides and AI assistance. Navigate complex paperwork with confidence.</p>
-            <a href="#search" class="btn-main">Find Documents</a>
+            <h1>AI Document Filling Assistant</h1>
+            <p>Upload your blank forms and watch as our AI automatically fills them out with the correct information. All processing happens locally on your device.</p>
+            <a href="#assistant" class="btn-main">Try Document Assistant</a>
         </div>
         <div class="robot-container fade-in">
-            <img src="https://cdn.pixabay.com/photo/2020/04/13/20/40/robot-5039668_1280.png" alt="AI Assistant Robot" class="robot-image">
+            <img src="../img/riter.png" alt="AI Assistant Robot" class="robot-image" style="max-width: 300px;">
         </div>
     </div>
 </section>
 
-<section class="search-section" id="search">
-    <div class="search-section-bg">
-        <div class="search-circle search-circle-1"></div>
-        <div class="search-circle search-circle-2"></div>
-    </div>
-
+<section class="security-section">
+    <div class="security-bg"></div>
     <div class="container">
-        <h2 class="sections-heading">Find Required Documents</h2>
-        <div class="search-container fade-in">
-            <form class="search-form" id="search-form">
-                <div class="form-group">
-                    <label for="search-query">Search for documents</label>
-                    <input type="text" class="form-control" id="search-query" placeholder="e.g., visa application form, residence permit, work authorization">
-                </div>
-                <button type="submit" class="search-button">
-                    <i class="fas fa-search"></i> Search Documents
-                </button>
-            </form>
-        </div>
-
-        <div class="document-categories">
-            <h2 class="sections-heading">Document Categories</h2>
-            <div class="categories-grid">
-                <div class="category-card fade-in">
-                    <div class="category-icon">
-                        <i class="fas fa-passport"></i>
-                    </div>
-                    <h3>Visa Applications</h3>
-                    <p>Tourist, work, student and family reunion visas</p>
-                    <div class="category-count">12 documents</div>
-                </div>
-
-                <div class="category-card fade-in">
-                    <div class="category-icon">
-                        <i class="fas fa-id-card"></i>
-                    </div>
-                    <h3>Residence Permits</h3>
-                    <p>Temporary and permanent residence documents</p>
-                    <div class="category-count">8 documents</div>
-                </div>
-
-                <div class="category-card fade-in">
-                    <div class="category-icon">
-                        <i class="fas fa-briefcase"></i>
-                    </div>
-                    <h3>Work Authorization</h3>
-                    <p>Employment permits and work-related documents</p>
-                    <div class="category-count">6 documents</div>
-                </div>
-
-                <div class="category-card fade-in">
-                    <div class="category-icon">
-                        <i class="fas fa-home"></i>
-                    </div>
-                    <h3>Registration</h3>
-                    <p>Address registration and municipal documents</p>
-                    <div class="category-count">5 documents</div>
-                </div>
-
-                <div class="category-card fade-in">
-                    <div class="category-icon">
-                        <i class="fas fa-heartbeat"></i>
-                    </div>
-                    <h3>Health Insurance</h3>
-                    <p>Health coverage forms and insurance documents</p>
-                    <div class="category-count">4 documents</div>
-                </div>
-
-                <div class="category-card fade-in">
-                    <div class="category-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <h3>Education</h3>
-                    <p>Student visas and educational institution forms</p>
-                    <div class="category-count">7 documents</div>
-                </div>
-            </div>
+        <div class="security-notice fade-in">
+            <h3><i class="fas fa-shield-alt"></i> Your Privacy & Security</h3>
+            <p><strong>All document processing happens locally in your browser.</strong> Your files never leave your device or get sent to our servers. We don't store any of your personal information or documents.</p>
         </div>
     </div>
 </section>
 
-<section class="document-guides">
-    <div class="guides-bg"></div>
+<section class="document-assistant" id="assistant">
     <div class="container">
-        <h2 class="sections-heading">Document Guides & Templates</h2>
-        <div class="guides-container">
-            <div class="guide-item fade-in">
-                <div class="guide-header">
-                    <div class="guide-title">
-                        <h3>Application for National Visa (Type D)</h3>
-                        <div class="guide-meta">
-                            <span><i class="fas fa-flag"></i> Poland</span>
-                            <span><i class="fas fa-clock"></i> 30-60 minutes to complete</span>
-                        </div>
-                    </div>
-                    <div class="guide-difficulty difficulty-medium">Medium Difficulty</div>
+        <h2 class="sections-heading">Document Filling Assistant</h2>
+        <div class="assistant-container">
+            <!-- Input Panel -->
+            <div class="panel fade-in">
+                <div class="panel-header">
+                    <h3><i class="fas fa-upload"></i> Upload Documents</h3>
                 </div>
-                <div class="guide-content">
-                    <p>This application is required for long-term stays in Poland (exceeding 90 days) for purposes such as work, study, or family reunification.</p>
-                    <div class="guide-steps">
-                        <h4>Filling Instructions:</h4>
-                        <ol>
-                            <li>Complete personal information section using your passport details</li>
-                            <li>Specify the purpose of your stay (work, study, family)</li>
-                            <li>Provide details of your intended accommodation in Poland</li>
-                            <li>Include information about your financial means</li>
-                            <li>Sign and date the application form</li>
-                        </ol>
+                <div class="panel-content">
+                    <div class="upload-area" id="upload-area">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h4>Upload Blank Forms</h4>
+                        <p>Drag & drop your documents here or click to browse files</p>
+                        <div class="upload-button">Select Files</div>
+                        <input type="file" id="file-input" class="file-input" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" multiple>
                     </div>
-                </div>
-                <div class="guide-actions">
-                    <a href="#" class="guide-action">
-                        <i class="fas fa-download"></i> Download Form
-                    </a>
-                    <a href="#" class="guide-action secondary">
-                        <i class="fas fa-eye"></i> View Sample
-                    </a>
-                    <a href="#" class="guide-action secondary">
-                        <i class="fas fa-question-circle"></i> Get Help
-                    </a>
+
+                    <div id="uploaded-files">
+                        <!-- Uploaded files will appear here -->
+                    </div>
+
+                    <div class="document-actions">
+                        <button class="document-action" id="process-btn" disabled>
+                            <i class="fas fa-magic"></i> Fill Documents Automatically
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <div class="guide-item fade-in">
-                <div class="guide-header">
-                    <div class="guide-title">
-                        <h3>Anmeldung Registration Form</h3>
-                        <div class="guide-meta">
-                            <span><i class="fas fa-flag"></i> Germany</span>
-                            <span><i class="fas fa-clock"></i> 15-30 minutes to complete</span>
+            <!-- Output Panel -->
+            <div class="panel fade-in">
+                <div class="panel-header">
+                    <h3><i class="fas fa-file-contract"></i> Filled Documents</h3>
+                </div>
+                <div class="panel-content">
+                    <div class="document-preview">
+                        <div class="preview-header">
+                            <h4>Document Preview</h4>
+                            <span id="document-count">0 documents</span>
+                        </div>
+                        <div class="preview-content" id="preview-content">
+                            <div class="preview-placeholder">
+                                <i class="fas fa-file-alt"></i>
+                                <p>Upload documents to see them automatically filled out</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="guide-difficulty difficulty-easy">Easy Difficulty</div>
-                </div>
-                <div class="guide-content">
-                    <p>Mandatory registration of your address in Germany. Must be completed within 14 days of moving to a new residence.</p>
-                    <div class="guide-steps">
-                        <h4>Filling Instructions:</h4>
-                        <ol>
-                            <li>Fill in your personal details exactly as in your passport</li>
-                            <li>Provide your complete new German address</li>
-                            <li>Include the date you moved into the residence</li>
-                            <li>Have your landlord sign the confirmation section</li>
-                            <li>Bring original passport and rental contract to appointment</li>
-                        </ol>
-                    </div>
-                </div>
-                <div class="guide-actions">
-                    <a href="#" class="guide-action">
-                        <i class="fas fa-download"></i> Download Form
-                    </a>
-                    <a href="#" class="guide-action secondary">
-                        <i class="fas fa-eye"></i> View Sample
-                    </a>
-                    <a href="#" class="guide-action secondary">
-                        <i class="fas fa-question-circle"></i> Get Help
-                    </a>
-                </div>
-            </div>
 
-            <div class="guide-item fade-in">
-                <div class="guide-header">
-                    <div class="guide-title">
-                        <h3>Application for Residence Card</h3>
-                        <div class="guide-meta">
-                            <span><i class="fas fa-flag"></i> France</span>
-                            <span><i class="fas fa-clock"></i> 45-90 minutes to complete</span>
-                        </div>
-                    </div>
-                    <div class="guide-difficulty difficulty-hard">Hard Difficulty</div>
-                </div>
-                <div class="guide-content">
-                    <p>Required for non-EU citizens planning to stay in France for more than 3 months. This card serves as your residence permit.</p>
-                    <div class="guide-steps">
-                        <h4>Filling Instructions:</h4>
-                        <ol>
-                            <li>Complete all personal information sections</li>
-                            <li>Attach recent passport-style photographs</li>
-                            <li>Provide proof of accommodation in France</li>
-                            <li>Include evidence of financial resources</li>
-                            <li>Submit health insurance documentation</li>
-                            <li>Provide proof of purpose of stay (work contract, enrollment certificate)</li>
-                        </ol>
+                    <div class="document-actions">
+                        <button class="document-action" id="download-all-btn" disabled>
+                            <i class="fas fa-download"></i> Download All Documents
+                        </button>
+                        <button class="document-action secondary" id="clear-all-btn">
+                            <i class="fas fa-trash-alt"></i> Clear All
+                        </button>
                     </div>
                 </div>
-                <div class="guide-actions">
-                    <a href="#" class="guide-action">
-                        <i class="fas fa-download"></i> Download Form
-                    </a>
-                    <a href="#" class="guide-action secondary">
-                        <i class="fas fa-eye"></i> View Sample
-                    </a>
-                    <a href="#" class="guide-action secondary">
-                        <i class="fas fa-question-circle"></i> Get Help
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="ai-assistant" id="ai-assistant">
-    <div class="ai-assistant-bg">
-        <div class="ai-circle ai-circle-1"></div>
-        <div class="ai-circle ai-circle-2"></div>
-    </div>
-
-    <div class="container">
-        <h2 class="sections-heading">Document Assistant</h2>
-        <div class="ai-chat-container fade-in">
-            <div class="ai-chat-header">
-                <div class="ai-chat-avatar">
-                    <i class="fas fa-robot"></i>
-                </div>
-                <div class="ai-chat-title">
-                    <h3>Document Helper</h3>
-                    <p>I can help you with document questions</p>
-                </div>
-            </div>
-            <div class="ai-chat-messages" id="chat-messages">
-                <div class="message message-ai">
-                    <div class="message-bubble">
-                        Hello! I'm your document assistant. I can help you find the right forms, understand filling instructions, and answer questions about migration documents. What do you need help with?
-                        <div class="quick-actions">
-                            <button class="quick-action" data-action="visa">Visa Applications</button>
-                            <button class="quick-action" data-action="residence">Residence Permits</button>
-                            <button class="quick-action" data-action="work">Work Documents</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="ai-chat-input">
-                <input type="text" id="chat-input" placeholder="Ask about documents...">
-                <button id="send-button"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
     </div>
@@ -270,9 +104,9 @@
 
 <footer class="footer">
     <div class="container">
-        <h2>Need Help With Documents?</h2>
-        <p>Our AI assistant and comprehensive guides are here to help you complete migration documents correctly.</p>
-        <a href="#ai-assistant" class="btn-footer">Ask Document Assistant</a>
+        <h2>Try Our Secure Document Assistant</h2>
+        <p>Process your immigration documents safely with our local AI assistant.</p>
+        <a href="#assistant" class="btn-footer">Start Filling Documents</a>
     </div>
 </footer>
 
@@ -292,165 +126,288 @@
                 `<div style="color: red;">Error loading header: ${error.message}</div>`;
         });
 
+    // Document Assistant functionality
+    const fileInput = document.getElementById('file-input');
+    const uploadArea = document.getElementById('upload-area');
+    const uploadedFiles = document.getElementById('uploaded-files');
+    const processBtn = document.getElementById('process-btn');
+    const downloadAllBtn = document.getElementById('download-all-btn');
+    const clearAllBtn = document.getElementById('clear-all-btn');
+    const previewContent = document.getElementById('preview-content');
+    const documentCount = document.getElementById('document-count');
 
-    // Search functionality
-    const searchForm = document.getElementById('search-form');
-    const searchInput = document.getElementById('search-query');
+    let uploadedDocuments = [];
+    let filledDocuments = [];
 
-    searchForm.addEventListener('submit', function(e) {
+    // File upload handling
+    uploadArea.addEventListener('click', () => {
+        fileInput.click();
+    });
+
+    uploadArea.addEventListener('dragover', (e) => {
         e.preventDefault();
-        const query = searchInput.value.trim();
-        if (query) {
-            // In a real application, this would search through documents
-            // For demo purposes, we'll just show an alert
-            alert(`Searching for documents related to: "${query}"\n\nIn a real application, this would display search results.`);
+        uploadArea.style.borderColor = 'var(--color-primary-blue)';
+        uploadArea.style.backgroundColor = '#f0f4ff';
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.style.borderColor = '#e0e0e0';
+        uploadArea.style.backgroundColor = 'transparent';
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.style.borderColor = '#e0e0e0';
+        uploadArea.style.backgroundColor = 'transparent';
+
+        if (e.dataTransfer.files.length) {
+            handleFileUpload(Array.from(e.dataTransfer.files));
         }
     });
 
-    // AI Chat functionality
-    const chatMessages = document.getElementById('chat-messages');
-    const chatInput = document.getElementById('chat-input');
-    const sendButton = document.getElementById('send-button');
-    const quickActions = document.querySelectorAll('.quick-action');
-
-    // Responses for different topics
-    const responses = {
-        'visa': {
-            message: "I can help with visa applications! Different countries have different requirements. Common visa types include:<ul><li><strong>Tourist Visa</strong> - For short visits</li><li><strong>Work Visa</strong> - For employment</li><li><strong>Student Visa</strong> - For education</li><li><strong>Family Reunification Visa</strong> - To join family members</li></ul>Which type of visa are you interested in?",
-            actions: [
-                { text: "Work Visa", action: "work-visa" },
-                { text: "Student Visa", action: "student-visa" },
-                { text: "Tourist Visa", action: "tourist-visa" }
-            ]
-        },
-        'residence': {
-            message: "Residence permits allow you to stay in a country long-term. Requirements vary by country but typically include:<ul><li>Proof of financial means</li><li>Health insurance coverage</li><li>Clean criminal record</li><li>Accommodation proof</li><li>Purpose of stay documentation</li></ul>Which country's residence permit are you interested in?",
-            actions: [
-                { text: "Germany", action: "germany-residence" },
-                { text: "Poland", action: "poland-residence" },
-                { text: "France", action: "france-residence" }
-            ]
-        },
-        'work': {
-            message: "Work authorization documents are required for legal employment. These typically include:<ul><li>Work permit application</li><li>Employment contract</li><li>Employer sponsorship letter</li><li>Qualifications verification</li><li>Labor market test results (in some countries)</li></ul>What specific work document do you need help with?",
-            actions: [
-                { text: "Work Permit", action: "work-permit" },
-                { text: "Blue Card EU", action: "blue-card" },
-                { text: "Employer Sponsorship", action: "sponsorship" }
-            ]
-        },
-        'work-visa': {
-            message: "For a work visa, you'll typically need:<ul><li>Completed visa application form</li><li>Valid passport</li><li>Passport-sized photographs</li><li>Employment contract or job offer</li><li>Educational qualifications</li><li>Proof of accommodation</li><li>Health insurance proof</li></ul>Some countries also require a labor market test to prove no local candidates are available.",
-            actions: [
-                { text: "Back to Visas", action: "visa" },
-                { text: "Other Documents", action: "default" }
-            ]
-        },
-        'germany-residence': {
-            message: "For a German residence permit, you'll need:<ul><li>Completed application form</li><li>Valid passport</li><li>Biometric photos</li><li>Proof of health insurance</li><li>Proof of financial means</li><li>Rental agreement</li><li>Purpose-specific documents (work contract, university admission, etc.)</li></ul>You must apply at the local Foreigners' Office (Ausländerbehörde).",
-            actions: [
-                { text: "Back to Residence", action: "residence" },
-                { text: "Other Documents", action: "default" }
-            ]
-        },
-        'default': {
-            message: "I can help you with various migration documents. What specific document or process are you interested in?",
-            actions: [
-                { text: "Visa Applications", action: "visa" },
-                { text: "Residence Permits", action: "residence" },
-                { text: "Work Documents", action: "work" }
-            ]
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length) {
+            handleFileUpload(Array.from(e.target.files));
         }
-    };
+    });
 
-    // Add a message to the chat
-    function addMessage(text, isUser) {
-        const messageDiv = document.createElement('div');
-        messageDiv.classList.add('message', isUser ? 'message-user' : 'message-ai');
+    function handleFileUpload(files) {
+        files.forEach(file => {
+            // Validate file type
+            const validTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png',
+                'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
 
-        const bubbleDiv = document.createElement('div');
-        bubbleDiv.classList.add('message-bubble');
-        bubbleDiv.innerHTML = text;
+            if (!validTypes.includes(file.type)) {
+                alert('Please upload PDF, image, or Word documents only.');
+                return;
+            }
 
-        messageDiv.appendChild(bubbleDiv);
-        chatMessages.appendChild(messageDiv);
+            // Check file size (max 10MB)
+            if (file.size > 10 * 1024 * 1024) {
+                alert('File size too large. Please upload files smaller than 10MB.');
+                return;
+            }
 
-        // Scroll to bottom
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-
-    // Add quick action buttons
-    function addQuickActions(actions) {
-        const quickActionsDiv = document.createElement('div');
-        quickActionsDiv.classList.add('quick-actions');
-
-        actions.forEach(action => {
-            const button = document.createElement('button');
-            button.classList.add('quick-action');
-            button.textContent = action.text;
-            button.setAttribute('data-action', action.action);
-            button.addEventListener('click', () => handleQuickAction(action.action));
-            quickActionsDiv.appendChild(button);
+            // Add to uploaded documents
+            uploadedDocuments.push(file);
+            displayUploadedFile(file);
         });
 
-        // Add to the last AI message
-        const lastMessage = chatMessages.lastElementChild;
-        if (lastMessage && lastMessage.classList.contains('message-ai')) {
-            lastMessage.querySelector('.message-bubble').appendChild(quickActionsDiv);
+        // Enable process button if we have documents
+        if (uploadedDocuments.length > 0) {
+            processBtn.disabled = false;
         }
+
+        updateDocumentCount();
     }
 
-    // Handle quick action button clicks
-    function handleQuickAction(action) {
-        const response = responses[action] || responses.default;
-        addMessage(response.message, false);
-        addQuickActions(response.actions);
+    function displayUploadedFile(file) {
+        const fileElement = document.createElement('div');
+        fileElement.className = 'uploaded-file';
+        fileElement.innerHTML = `
+            <div class="file-icon">
+                <i class="fas fa-file-pdf"></i>
+            </div>
+            <div class="file-info">
+                <div class="file-name">${file.name}</div>
+                <div class="file-size">${formatFileSize(file.size)}</div>
+            </div>
+            <div class="file-actions">
+                <button class="file-action preview" title="Preview">
+                    <i class="fas fa-eye"></i>
+                </button>
+                <button class="file-action remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        `;
+
+        // Remove file functionality
+        fileElement.querySelector('.remove').addEventListener('click', () => {
+            const index = uploadedDocuments.findIndex(doc => doc.name === file.name);
+            if (index !== -1) {
+                uploadedDocuments.splice(index, 1);
+            }
+            fileElement.remove();
+
+            if (uploadedDocuments.length === 0) {
+                processBtn.disabled = true;
+            }
+            updateDocumentCount();
+        });
+
+        // Preview file functionality
+        fileElement.querySelector('.preview').addEventListener('click', () => {
+            previewDocument(file);
+        });
+
+        uploadedFiles.appendChild(fileElement);
     }
 
-    // Handle sending a message
-    function sendMessage() {
-        const message = chatInput.value.trim();
-        if (message) {
-            addMessage(message, true);
-            chatInput.value = '';
+    function formatFileSize(bytes) {
+        if (bytes < 1024) return bytes + ' bytes';
+        else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+        else return (bytes / 1048576).toFixed(1) + ' MB';
+    }
 
-            // Simulate AI thinking
+    function updateDocumentCount() {
+        const totalDocs = uploadedDocuments.length + filledDocuments.length;
+        documentCount.textContent = `${totalDocs} documents`;
+    }
+
+    function previewDocument(file) {
+        // In a real application, this would show a proper preview
+        // For demo, we'll just show a placeholder with file info
+        previewContent.innerHTML = `
+            <div class="preview-document">
+                <div class="document-image">
+                    <div style="text-align: center; padding: 20px;">
+                        <i class="fas fa-file-pdf" style="font-size: 4em; color: #e0e0e0; margin-bottom: 15px;"></i>
+                        <h4>${file.name}</h4>
+                        <p>${formatFileSize(file.size)}</p>
+                        <p style="margin-top: 20px; color: var(--color-light-text);">Document preview would appear here</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // Process documents
+    processBtn.addEventListener('click', () => {
+        if (uploadedDocuments.length === 0) return;
+
+        // Show processing indicator
+        previewContent.innerHTML = `
+            <div class="processing-indicator">
+                <i class="fas fa-spinner"></i> Processing ${uploadedDocuments.length} documents...
+            </div>
+        `;
+
+        // Simulate processing delay
+        setTimeout(() => {
+            processDocuments();
+        }, 2000);
+    });
+
+    function processDocuments() {
+        filledDocuments = [];
+
+        // Process each uploaded document
+        uploadedDocuments.forEach((doc, index) => {
+            // Simulate AI processing and creating filled version
+            const filledDoc = {
+                name: `FILLED_${doc.name}`,
+                type: doc.type,
+                size: doc.size,
+                original: doc
+            };
+
+            filledDocuments.push(filledDoc);
+
+            // Display filled document after a short delay
             setTimeout(() => {
-                let response = responses.default;
+                displayFilledDocument(filledDoc, index);
+            }, index * 500);
+        });
 
-                // Simple keyword matching
-                if (message.toLowerCase().includes('visa')) {
-                    response = responses['visa'];
-                } else if (message.toLowerCase().includes('residence') || message.toLowerCase().includes('permit')) {
-                    response = responses['residence'];
-                } else if (message.toLowerCase().includes('work') || message.toLowerCase().includes('employment')) {
-                    response = responses['work'];
-                } else if (message.toLowerCase().includes('german')) {
-                    if (message.toLowerCase().includes('residence')) {
-                        response = responses['germany-residence'];
-                    }
-                }
+        // Clear uploaded documents
+        uploadedDocuments = [];
+        uploadedFiles.innerHTML = '';
+        processBtn.disabled = true;
 
-                addMessage(response.message, false);
-                addQuickActions(response.actions);
-            }, 1000);
-        }
+        // Enable download button
+        downloadAllBtn.disabled = false;
+
+        updateDocumentCount();
     }
 
-    // Event listeners
-    sendButton.addEventListener('click', sendMessage);
-    chatInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            sendMessage();
-        }
+    function displayFilledDocument(doc, index) {
+        const docElement = document.createElement('div');
+        docElement.className = 'uploaded-file';
+        docElement.style.animationDelay = `${index * 0.1}s`;
+        docElement.classList.add('fade-in');
+        docElement.innerHTML = `
+            <div class="file-icon" style="background-color: var(--color-success);">
+                <i class="fas fa-file-check"></i>
+            </div>
+            <div class="file-info">
+                <div class="file-name">${doc.name}</div>
+                <div class="file-size">${formatFileSize(doc.size)} • Completed</div>
+            </div>
+            <div class="file-actions">
+                <button class="file-action preview" title="Preview">
+                    <i class="fas fa-eye"></i>
+                </button>
+                <button class="file-action download" title="Download">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+        `;
+
+        // Preview filled document
+        docElement.querySelector('.preview').addEventListener('click', () => {
+            previewFilledDocument(doc);
+        });
+
+        // Download filled document
+        docElement.querySelector('.download').addEventListener('click', () => {
+            downloadDocument(doc);
+        });
+
+        // Add to the uploaded files area (which now shows filled documents)
+        uploadedFiles.appendChild(docElement);
+    }
+
+    function previewFilledDocument(doc) {
+        // Show a simulated filled document
+        previewContent.innerHTML = `
+            <div class="preview-document">
+                <div class="document-image">
+                    <div style="text-align: center; padding: 20px; width: 100%;">
+                        <div style="background: white; border: 1px solid #e0e0e0; border-radius: 5px; padding: 20px; text-align: left;">
+                            <h3 style="color: var(--color-success); margin-bottom: 15px;">
+                                <i class="fas fa-check-circle"></i> Completed Document
+                            </h3>
+                            <p><strong>Document:</strong> ${doc.name}</p>
+                            <p><strong>Status:</strong> All fields have been automatically filled</p>
+                            <p><strong>Processed:</strong> ${new Date().toLocaleString()}</p>
+                            <div style="margin-top: 20px; padding: 15px; background-color: #f9fafc; border-radius: 5px;">
+                                <p style="margin: 0; font-style: italic;">This document has been automatically filled with the appropriate information based on its type and purpose.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function downloadDocument(doc) {
+        // In a real application, this would download the actual filled document
+        // For demo, we'll just show an alert
+        alert(`Downloading: ${doc.name}\n\nIn a real application, this would download the completed document.`);
+    }
+
+    // Download all documents
+    downloadAllBtn.addEventListener('click', () => {
+        if (filledDocuments.length === 0) return;
+
+        alert(`Downloading ${filledDocuments.length} completed documents.\n\nIn a real application, this would download all filled documents as a ZIP file.`);
     });
 
-    // Quick action buttons in initial message
-    quickActions.forEach(button => {
-        button.addEventListener('click', () => {
-            const action = button.getAttribute('data-action');
-            handleQuickAction(action);
-        });
+    // Clear all documents
+    clearAllBtn.addEventListener('click', () => {
+        uploadedDocuments = [];
+        filledDocuments = [];
+        uploadedFiles.innerHTML = '';
+        previewContent.innerHTML = `
+            <div class="preview-placeholder">
+                <i class="fas fa-file-alt"></i>
+                <p>Upload documents to see them automatically filled out</p>
+            </div>
+        `;
+        processBtn.disabled = true;
+        downloadAllBtn.disabled = true;
+        updateDocumentCount();
     });
 
     // Mobile menu toggle
