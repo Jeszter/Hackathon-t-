@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -17,8 +17,6 @@ from back.job_api import router as job_router
 from back.translation_api import router as translation_router
 from back.language_backend import router as language_router
 from back.culture_router import router as culture_router
-
-
 from back.chat_backend import router as chat_router
 
 app = FastAPI()
@@ -46,6 +44,7 @@ async def get_header():
     else:
         raise HTTPException(status_code=404, detail="Header file not found")
 
+
 @app.get("/")
 async def home():
     return FileResponse(pages_dir / "home.html")
@@ -65,30 +64,26 @@ async def jobs():
 async def translation():
     return FileResponse(pages_dir / "translation.html")
 
+
 @app.get("/cultural")
 async def cultural():
-    return FileResponse(pages_dir / "cultural.html")
+    return FileResponse(pages_dir / "culture.html")
 
 
 @app.get("/language")
 async def language():
     return FileResponse(pages_dir / "language.html")
 
+
 @app.get("/official")
 async def official():
     return FileResponse(pages_dir / "official.html")
-
-
-
-
-
 
 
 app.mount("/css", StaticFiles(directory=front_dir / "css"), name="css")
 app.mount("/js", StaticFiles(directory=front_dir / "js"), name="js")
 app.mount("/img", StaticFiles(directory=front_dir / "img"), name="img")
 
-# CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -97,7 +92,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Routers
 app.include_router(work_router, prefix="/work")
 app.include_router(docs_router, prefix="/docs")
 app.include_router(language_router, prefix="/language")
@@ -106,7 +100,7 @@ app.include_router(neurohr_router, prefix="/neurohr-api")
 app.include_router(job_router)
 app.include_router(translation_router)
 app.include_router(language_router, prefix="/api/language")
-app.include_router(culture_router, prefix="/culture")
+app.include_router(culture_router, prefix="/api/culture")
 app.include_router(chat_router, prefix="/api")
 
 if __name__ == "__main__":

@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <style>
-    /* Добавляем стили для изображения вместо иконки */
     .ai-chat-avatar img {
         width: 100%;
         height: 100%;
@@ -42,7 +41,7 @@
         align-items: center;
         justify-content: center;
         font-size: 24px;
-        overflow: hidden; /* Добавляем для корректного отображения изображения */
+        overflow: hidden;
     }
 
     .ai-chat-title h3 {
@@ -165,7 +164,6 @@
 </style>
 <body>
 <div id="header-container"></div>
-
 
 <section class="hero" id="home">
     <span class="hero-decoration plus-top">x</span>
@@ -331,27 +329,20 @@
     </div>
 </footer>
 
-
 <script src="../js/nav.js"></script>
 
-
-
 <script>
-
     fetch('/header.html')
         .then(response => {
-            console.log("Response status:", response.status);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             return response.text();
         })
         .then(html => {
-            console.log("Header loaded successfully");
             document.getElementById('header-container').innerHTML = html;
         })
         .catch(error => {
-            console.error('Error loading header:', error);
             document.getElementById('header-container').innerHTML =
                 `<div style="color: red;">Error loading header: ${error.message}</div>`;
         });
@@ -369,17 +360,14 @@
         }
 
         bindEvents() {
-            // Send button click
             document.getElementById('send-button').addEventListener('click', () => this.sendMessage());
 
-            // Enter key in input
             document.getElementById('chat-input').addEventListener('keypress', (e) => {
                 if (e.key === 'Enter' && !this.isProcessing) {
                     this.sendMessage();
                 }
             });
 
-            // Quick actions
             document.addEventListener('click', (e) => {
                 if (e.target.classList.contains('quick-action')) {
                     const action = e.target.dataset.action;
@@ -402,7 +390,7 @@
                 const response = await fetch('/api/chat', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
                         message: message,
@@ -416,7 +404,6 @@
                 if (data.status === 'success') {
                     this.addMessage('assistant', data.data.assistant_message, data.data.quick_actions);
 
-                    // Update chat history
                     this.chatHistory.push(
                         { role: 'user', content: message },
                         { role: 'assistant', content: data.data.assistant_message }
@@ -441,7 +428,12 @@
 
             const bubbleDiv = document.createElement('div');
             bubbleDiv.className = 'message-bubble';
-            bubbleDiv.textContent = content;
+
+            if (role === 'assistant') {
+                bubbleDiv.innerHTML = content;
+            } else {
+                bubbleDiv.textContent = content;
+            }
 
             if (quickActions && role === 'assistant') {
                 const actionsDiv = document.createElement('div');
@@ -461,19 +453,17 @@
 
             messageDiv.appendChild(bubbleDiv);
             messagesContainer.appendChild(messageDiv);
-
-            // Scroll to bottom
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
         handleQuickAction(action) {
             const actionMessages = {
-                'documents': 'I need help with official documents and forms',
-                'housing': 'I want to find housing accommodation',
-                'language': 'I want to learn the language',
-                'community': 'I want to find community events',
-                'cv_help': 'I need help with my CV',
-                'find_jobs': 'I want to find a job'
+                documents: 'I need help with official documents and forms',
+                housing: 'I want to find housing accommodation',
+                language: 'I want to learn the language',
+                community: 'I want to find community events',
+                cv_help: 'I need help with my CV',
+                find_jobs: 'I want to find a job'
             };
 
             const message = actionMessages[action] || `Help with ${action}`;
@@ -505,8 +495,6 @@
             const saved = localStorage.getItem('urbanmind_chat_history');
             if (saved) {
                 this.chatHistory = JSON.parse(saved);
-
-                // Display last few messages
                 const recentMessages = this.chatHistory.slice(-4);
                 recentMessages.forEach(msg => {
                     this.addMessage(msg.role, msg.content);
