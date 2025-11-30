@@ -3,14 +3,14 @@ import json
 import time
 from typing import Any, Dict, List, Optional
 
-import requests
+import httpx
 from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel
 from dotenv import load_dotenv
-from openai import OpenAI
+from openai import AsyncOpenAI
 
 load_dotenv()
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 router = APIRouter()
 
@@ -46,34 +46,36 @@ class BankingInfo(BaseModel):
     banks: List[Bank]
     steps: List[BankingStep]
 
-def reverse_geocode(lat: float, lon: float) -> Dict[str, str]:
+async def reverse_geocode(lat: float, lon: float) -> Dict[str, str]:
     try:
         url = f"https://nominatim.openstreetmap.org/reverse?lat={lat}&lon={lon}&format=json&addressdetails=1"
-        resp = requests.get(url, headers={"User-Agent": "UrbanMind"}, timeout=10)
-        data = resp.json()
-        addr = data.get("address", {})
-        return {
-            "country_code": addr.get("country_code", "").lower(),
-            "country_name": addr.get("country", "") or "Unknown",
-            "city": addr.get("city")
-            or addr.get("town")
-            or addr.get("village")
-            or addr.get("municipality")
-            or addr.get("state")
-            or "",
-        }
+        async with httpx.AsyncClient(timeout=5.0) as http_client:
+            resp = await http_client.get(url, headers={"User-Agent": "UrbanMind"})
+            data = resp.json()
+            addr = data.get("address", {})
+            return {
+                "country_code": addr.get("country_code", "").lower(),
+                "country_name": addr.get("country", "") or "Unknown",
+                "city": addr.get("city")
+                or addr.get("town")
+                or addr.get("village")
+                or addr.get("municipality")
+                or addr.get("state")
+                or "",
+            }
     except Exception:
         return {"country_code": "", "country_name": "Unknown", "city": ""}
 
-def geolocate_ip(ip: str) -> Dict[str, str]:
+async def geolocate_ip(ip: str) -> Dict[str, str]:
     try:
-        resp = requests.get(f"https://ipapi.co/{ip}/json/", timeout=10)
-        data = resp.json()
-        return {
-            "country_code": str(data.get("country_code", "")).lower(),
-            "country_name": data.get("country_name", "") or "Unknown",
-            "city": data.get("city", "") or data.get("region", "") or "",
-        }
+        async with httpx.AsyncClient(timeout=5.0) as http_client:
+            resp = await http_client.get(f"https://ipapi.co/{ip}/json/")
+            data = resp.json()
+            return {
+                "country_code": str(data.get("country_code", "")).lower(),
+                "country_name": data.get("country_name", "") or "Unknown",
+                "city": data.get("city", "") or data.get("region", "") or "",
+            }
     except Exception:
         return {"country_code": "", "country_name": "Unknown", "city": ""}
 
@@ -88,7 +90,7 @@ def get_cache(key: str) -> Optional[Dict[str, Any]]:
 def set_cache(key: str, data: Dict[str, Any]) -> None:
     CACHE[key] = {"data": data, "expires": time.time() + CACHE_TTL}
 
-def ask_ai_for_banking_info(location_text: str, language: str) -> BankingInfo:
+async def ask_ai_for_banking_info(location_text: str, language: str) -> BankingInfo:
     system_prompt = (
         "You are an expert banking assistant for migrants in European countries. "
         "Given the user's location (city and country), you always respond with a single JSON object describing: "
@@ -136,14 +138,15 @@ def ask_ai_for_banking_info(location_text: str, language: str) -> BankingInfo:
         "- Do not include any explanatory text outside the JSON object."
     )
 
-    resp = client.chat.completions.create(
-        model="gpt-4.1-mini",
+    resp = await client.chat.completions.create(
+        model="gpt-4o-mini",
         response_format={"type": "json_object"},
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt},
         ],
         temperature=0.3,
+        max_tokens=2000,
     )
 
     content = resp.choices[0].message.content
@@ -233,7 +236,7 @@ async def get_banking_info(req: BankingLocationRequest, request: Request) -> Ban
     city = ""
 
     if req.latitude is not None and req.longitude is not None:
-        geo = reverse_geocode(req.latitude, req.longitude)
+        geo = await reverse_geocode(req.latitude, req.longitude)
         country_code = geo["country_code"]
         country_name = geo["country_name"]
         city = geo["city"]
@@ -243,7 +246,7 @@ async def get_banking_info(req: BankingLocationRequest, request: Request) -> Ban
         city = ""
     else:
         ip = request.client.host
-        geo = geolocate_ip(ip)
+        geo = await geolocate_ip(ip)
         country_code = geo["country_code"]
         country_name = geo["country_name"]
         city = geo["city"]
@@ -261,6 +264,6 @@ async def get_banking_info(req: BankingLocationRequest, request: Request) -> Ban
     if cached:
         return BankingInfo(**cached)
 
-    info = ask_ai_for_banking_info(location_text, ui_lang)
+    info = await ask_ai_for_banking_info(location_text, ui_lang)
     set_cache(cache_key, info.dict())
     return info

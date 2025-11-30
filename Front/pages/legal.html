@@ -51,10 +51,10 @@
                 <div class="panel-content">
                     <div class="upload-area" id="upload-area">
                         <i class="fas fa-cloud-upload-alt"></i>
-                        <h4>Upload Blank Forms</h4>
-                        <p>Drag & drop your documents here or click to browse files</p>
+                        <h4>Upload Documents</h4>
+                        <p>Upload exactly 2 files: blank form template and your passport/ID document</p>
                         <div class="upload-button">Select Files</div>
-                        <input type="file" id="file-input" class="file-input" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" multiple>
+                        <input type="file" id="file-input" class="file-input" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.txt" multiple>
                     </div>
 
                     <div id="uploaded-files">
@@ -65,7 +65,9 @@
                         <button class="document-action" id="process-btn" disabled>
                             <i class="fas fa-magic"></i> Fill Documents Automatically
                         </button>
+                        <span id="fill-status" style="font-size:0.85rem;color:#4b5563;margin-left:1rem;"></span>
                     </div>
+                    <p style="margin-top:0.75rem;font-size:0.85rem;color:#6b7280;">For best results: first upload the blank form, then your passport/ID document.</p>
                 </div>
             </div>
 
@@ -77,20 +79,33 @@
                 <div class="panel-content">
                     <div class="document-preview">
                         <div class="preview-header">
-                            <h4>Document Preview</h4>
+                            <h4>Filled Form Preview</h4>
                             <span id="document-count">0 documents</span>
                         </div>
                         <div class="preview-content" id="preview-content">
                             <div class="preview-placeholder">
                                 <i class="fas fa-file-alt"></i>
-                                <p>Upload documents to see them automatically filled out</p>
+                                <p>Upload blank form and your document to see them automatically filled out</p>
+                            </div>
+                        </div>
+                        <div style="padding:1rem;border-top:1px solid rgba(148,163,184,0.3);display:none;" id="result-details">
+                            <div style="margin-bottom:0.75rem;">
+                                <strong style="font-size:0.85rem;">Missing fields</strong>
+                                <ul id="missing-fields-list" style="margin:0.25rem 0 0;padding-left:1.25rem;font-size:0.8rem;color:#6b7280;"></ul>
+                            </div>
+                            <div>
+                                <strong style="font-size:0.85rem;">Notes</strong>
+                                <p id="notes-text" style="margin:0.25rem 0 0;font-size:0.8rem;color:#6b7280;">No notes yet.</p>
                             </div>
                         </div>
                     </div>
 
                     <div class="document-actions">
-                        <button class="document-action" id="download-all-btn" disabled>
-                            <i class="fas fa-download"></i> Download All Documents
+                        <button class="document-action" id="copy-filled-btn" style="display:none;">
+                            <i class="fas fa-copy"></i> Copy Filled Text
+                        </button>
+                        <button class="document-action" id="download-filled-btn" style="display:none;">
+                            <i class="fas fa-download"></i> Download As TXT
                         </button>
                         <button class="document-action secondary" id="clear-all-btn">
                             <i class="fas fa-trash-alt"></i> Clear All
@@ -131,13 +146,18 @@
     const uploadArea = document.getElementById('upload-area');
     const uploadedFiles = document.getElementById('uploaded-files');
     const processBtn = document.getElementById('process-btn');
-    const downloadAllBtn = document.getElementById('download-all-btn');
     const clearAllBtn = document.getElementById('clear-all-btn');
     const previewContent = document.getElementById('preview-content');
     const documentCount = document.getElementById('document-count');
+    const fillStatus = document.getElementById('fill-status');
+    const missingFieldsList = document.getElementById('missing-fields-list');
+    const notesText = document.getElementById('notes-text');
+    const copyFilledBtn = document.getElementById('copy-filled-btn');
+    const downloadFilledBtn = document.getElementById('download-filled-btn');
+    const resultDetails = document.getElementById('result-details');
 
     let uploadedDocuments = [];
-    let filledDocuments = [];
+    let filledFormText = '';
 
     // File upload handling
     uploadArea.addEventListener('click', () => {
@@ -172,13 +192,14 @@
     });
 
     function handleFileUpload(files) {
-        files.forEach(file => {
+        Array.from(files).forEach(file => {
             // Validate file type
             const validTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png',
-                'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+                'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                'text/plain', 'text/html', 'text/markdown'];
 
-            if (!validTypes.includes(file.type)) {
-                alert('Please upload PDF, image, or Word documents only.');
+            if (!validTypes.includes(file.type) && !file.name.match(/\.(pdf|jpg|jpeg|png|doc|docx|txt|md|html)$/i)) {
+                alert('Please upload PDF, image, Word, or text documents only.');
                 return;
             }
 
@@ -193,9 +214,16 @@
             displayUploadedFile(file);
         });
 
-        // Enable process button if we have documents
-        if (uploadedDocuments.length > 0) {
+        // Enable process button if we have at least 2 documents
+        if (uploadedDocuments.length >= 2) {
             processBtn.disabled = false;
+            fillStatus.textContent = 'Ready to process. Click "Fill Documents Automatically" to start.';
+            fillStatus.style.color = '#16a34a';
+        } else if (uploadedDocuments.length === 1) {
+            fillStatus.textContent = 'Upload one more document (passport/ID) to proceed.';
+            fillStatus.style.color = '#f59e0b';
+        } else {
+            fillStatus.textContent = '';
         }
 
         updateDocumentCount();
@@ -230,8 +258,10 @@
             }
             fileElement.remove();
 
-            if (uploadedDocuments.length === 0) {
+            if (uploadedDocuments.length < 2) {
                 processBtn.disabled = true;
+                fillStatus.textContent = uploadedDocuments.length === 1 ? 'Upload one more document to proceed.' : '';
+                fillStatus.style.color = uploadedDocuments.length === 1 ? '#f59e0b' : '';
             }
             updateDocumentCount();
         });
@@ -251,8 +281,7 @@
     }
 
     function updateDocumentCount() {
-        const totalDocs = uploadedDocuments.length + filledDocuments.length;
-        documentCount.textContent = `${totalDocs} documents`;
+        documentCount.textContent = `${uploadedDocuments.length} document${uploadedDocuments.length !== 1 ? 's' : ''}`;
     }
 
     function previewDocument(file) {
@@ -274,139 +303,184 @@
 
     // Process documents
     processBtn.addEventListener('click', () => {
-        if (uploadedDocuments.length === 0) return;
+        if (uploadedDocuments.length < 2) {
+            fillStatus.textContent = 'Please upload at least 2 documents: blank form and your passport/ID.';
+            fillStatus.style.color = '#b91c1c';
+            return;
+        }
+
+        callFillFormAPI();
+    });
+
+    function callFillFormAPI() {
+        const templateFile = uploadedDocuments[0];
+        const userDocumentFile = uploadedDocuments[1];
 
         // Show processing indicator
         previewContent.innerHTML = `
-            <div class="processing-indicator">
-                <i class="fas fa-spinner"></i> Processing ${uploadedDocuments.length} documents...
+            <div class="processing-indicator" style="text-align:center;padding:2rem;">
+                <i class="fas fa-spinner fa-spin" style="font-size:2rem;color:#4f46e5;margin-bottom:1rem;"></i>
+                <p>Processing documents with AI...</p>
+                <p style="font-size:0.85rem;color:#6b7280;margin-top:0.5rem;">This may take a few moments</p>
             </div>
         `;
-
-        // Simulate processing delay
-        setTimeout(() => {
-            processDocuments();
-        }, 2000);
-    });
-
-    function processDocuments() {
-        filledDocuments = [];
-
-        // Process each uploaded document
-        uploadedDocuments.forEach((doc, index) => {
-            // Simulate AI processing and creating filled version
-            const filledDoc = {
-                name: `FILLED_${doc.name}`,
-                type: doc.type,
-                size: doc.size,
-                original: doc
-            };
-
-            filledDocuments.push(filledDoc);
-
-            // Display filled document after a short delay
-            setTimeout(() => {
-                displayFilledDocument(filledDoc, index);
-            }, index * 500);
-        });
-
-        // Clear uploaded documents
-        uploadedDocuments = [];
-        uploadedFiles.innerHTML = '';
+        resultDetails.style.display = 'none';
+        copyFilledBtn.style.display = 'none';
+        downloadFilledBtn.style.display = 'none';
+        fillStatus.textContent = 'Processing...';
+        fillStatus.style.color = '#2563eb';
         processBtn.disabled = true;
+        clearAllBtn.disabled = true;
 
-        // Enable download button
-        downloadAllBtn.disabled = false;
+        const formData = new FormData();
+        formData.append('template_file', templateFile);
+        formData.append('user_document_file', userDocumentFile);
+        formData.append('language', 'en');
 
-        updateDocumentCount();
-    }
-
-    function displayFilledDocument(doc, index) {
-        const docElement = document.createElement('div');
-        docElement.className = 'uploaded-file';
-        docElement.style.animationDelay = `${index * 0.1}s`;
-        docElement.classList.add('fade-in');
-        docElement.innerHTML = `
-            <div class="file-icon" style="background-color: var(--color-success);">
-                <i class="fas fa-file-check"></i>
-            </div>
-            <div class="file-info">
-                <div class="file-name">${doc.name}</div>
-                <div class="file-size">${formatFileSize(doc.size)} • Completed</div>
-            </div>
-            <div class="file-actions">
-                <button class="file-action preview" title="Preview">
-                    <i class="fas fa-eye"></i>
-                </button>
-                <button class="file-action download" title="Download">
-                    <i class="fas fa-download"></i>
-                </button>
-            </div>
-        `;
-
-        // Preview filled document
-        docElement.querySelector('.preview').addEventListener('click', () => {
-            previewFilledDocument(doc);
-        });
-
-        // Download filled document
-        docElement.querySelector('.download').addEventListener('click', () => {
-            downloadDocument(doc);
-        });
-
-        // Add to the uploaded files area (which now shows filled documents)
-        uploadedFiles.appendChild(docElement);
-    }
-
-    function previewFilledDocument(doc) {
-        // Show a simulated filled document
-        previewContent.innerHTML = `
-            <div class="preview-document">
-                <div class="document-image">
-                    <div style="text-align: center; padding: 20px; width: 100%;">
-                        <div style="background: white; border: 1px solid #e0e0e0; border-radius: 5px; padding: 20px; text-align: left;">
-                            <h3 style="color: var(--color-success); margin-bottom: 15px;">
-                                <i class="fas fa-check-circle"></i> Completed Document
-                            </h3>
-                            <p><strong>Document:</strong> ${doc.name}</p>
-                            <p><strong>Status:</strong> All fields have been automatically filled</p>
-                            <p><strong>Processed:</strong> ${new Date().toLocaleString()}</p>
-                            <div style="margin-top: 20px; padding: 15px; background-color: #f9fafc; border-radius: 5px;">
-                                <p style="margin: 0; font-style: italic;">This document has been automatically filled with the appropriate information based on its type and purpose.</p>
-                            </div>
-                        </div>
+        fetch('/api/fill_form', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(text => {
+                    try {
+                        const err = JSON.parse(text);
+                        throw new Error(err.detail || `HTTP error ${response.status}`);
+                    } catch (e) {
+                        throw new Error(text || `HTTP error ${response.status}`);
+                    }
+                });
+            }
+            
+            // Get metadata from headers
+            const missingFieldsHeader = response.headers.get('X-Missing-Fields') || '[]';
+            const notesHeader = response.headers.get('X-Notes') || '';
+            const contentDisposition = response.headers.get('Content-Disposition') || '';
+            let filename = 'filled_form.pdf';
+            if (contentDisposition) {
+                const match = contentDisposition.match(/filename="(.+)"/);
+                if (match) {
+                    filename = match[1];
+                }
+            }
+            
+            // Parse missing fields
+            let missingFields = [];
+            try {
+                missingFields = JSON.parse(missingFieldsHeader);
+            } catch (e) {
+                console.error('Failed to parse missing fields:', e);
+            }
+            
+            // Return blob and metadata
+            return response.blob().then(blob => ({
+                blob: blob,
+                filename: filename,
+                missingFields: missingFields,
+                notes: notesHeader
+            }));
+        })
+        .then(data => {
+            console.log('API response received:', data);
+            
+            // Automatically download the PDF
+            const url = URL.createObjectURL(data.blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = data.filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            // Display success message with PDF preview
+            previewContent.innerHTML = `
+                <div style="text-align:center;padding:2rem;">
+                    <i class="fas fa-check-circle" style="font-size:3rem;color:#16a34a;margin-bottom:1rem;"></i>
+                    <h3 style="color:#16a34a;margin-bottom:0.5rem;">Form Filled Successfully!</h3>
+                    <p style="color:#6b7280;margin-bottom:1.5rem;">Your filled PDF has been downloaded automatically.</p>
+                    <div style="background:#f8fafc;border-radius:12px;padding:1rem;border:1px dashed #cbd5f5;display:inline-block;">
+                        <i class="fas fa-file-pdf" style="font-size:2rem;color:#ef4444;margin-bottom:0.5rem;"></i>
+                        <p style="font-size:0.85rem;color:#0f172a;margin:0;">${data.filename}</p>
                     </div>
                 </div>
-            </div>
-        `;
+            `;
+
+            // Display missing fields
+            missingFieldsList.innerHTML = '';
+            if (data.missingFields && data.missingFields.length > 0) {
+                data.missingFields.forEach(field => {
+                    const li = document.createElement('li');
+                    li.textContent = field;
+                    missingFieldsList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'No missing fields detected.';
+                li.style.color = '#16a34a';
+                missingFieldsList.appendChild(li);
+            }
+
+            // Display notes
+            notesText.textContent = data.notes || 'The form was filled based on the available data.';
+
+            resultDetails.style.display = 'block';
+            copyFilledBtn.style.display = 'none'; // Hide copy button since we have PDF
+            downloadFilledBtn.style.display = 'inline-flex'; // Keep download button for re-download
+            downloadFilledBtn.onclick = () => {
+                const url = URL.createObjectURL(data.blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = data.filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            };
+            
+            fillStatus.textContent = 'Completed successfully! PDF downloaded.';
+            fillStatus.style.color = '#16a34a';
+            documentCount.textContent = '1 filled document';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            previewContent.innerHTML = `
+                <div style="text-align:center;padding:2rem;color:#b91c1c;">
+                    <i class="fas fa-exclamation-circle" style="font-size:2rem;margin-bottom:1rem;"></i>
+                    <p><strong>Error processing documents</strong></p>
+                    <p style="font-size:0.85rem;margin-top:0.5rem;">${error.message}</p>
+                </div>
+            `;
+            fillStatus.textContent = `Error: ${error.message}`;
+            fillStatus.style.color = '#b91c1c';
+        })
+        .finally(() => {
+            processBtn.disabled = false;
+            clearAllBtn.disabled = false;
+        });
     }
 
-    function downloadDocument(doc) {
-        // In a real application, this would download the actual filled document
-        // For demo, we'll just show an alert
-        alert(`Downloading: ${doc.name}\n\nIn a real application, this would download the completed document.`);
-    }
-
-    // Download all documents
-    downloadAllBtn.addEventListener('click', () => {
-        if (filledDocuments.length === 0) return;
-
-        alert(`Downloading ${filledDocuments.length} completed documents.\n\nIn a real application, this would download all filled documents as a ZIP file.`);
-    });
+    // Download button will be set dynamically in callFillFormAPI
 
     // Clear all documents
     clearAllBtn.addEventListener('click', () => {
         uploadedDocuments = [];
-        filledDocuments = [];
+        filledFormText = '';
         uploadedFiles.innerHTML = '';
         previewContent.innerHTML = `
             <div class="preview-placeholder">
                 <i class="fas fa-file-alt"></i>
-                <p>Upload documents to see them automatically filled out</p>
+                <p>Upload blank form and your document to see them automatically filled out</p>
             </div>
         `;
+        resultDetails.style.display = 'none';
+        copyFilledBtn.style.display = 'none';
+        downloadFilledBtn.style.display = 'none';
         processBtn.disabled = true;
-        downloadAllBtn.disabled = true;
+        fillStatus.textContent = '';
+        missingFieldsList.innerHTML = '';
+        notesText.textContent = 'No notes yet.';
         updateDocumentCount();
     });
 
