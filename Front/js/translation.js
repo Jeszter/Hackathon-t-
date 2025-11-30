@@ -127,22 +127,39 @@ document.addEventListener("DOMContentLoaded", () => {
     let mediaRecorder = null;
     let audioChunks = [];
     let isRecording = false;
+    let recorderMimeType = "audio/webm";
 
     async function startRecording() {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            mediaRecorder = new MediaRecorder(stream);
+
+            let options = {};
+            const preferred = "audio/webm;codecs=opus";
+            if (window.MediaRecorder && MediaRecorder.isTypeSupported(preferred)) {
+                options.mimeType = preferred;
+                recorderMimeType = preferred;
+            } else if (window.MediaRecorder && MediaRecorder.isTypeSupported("audio/webm")) {
+                options.mimeType = "audio/webm";
+                recorderMimeType = "audio/webm";
+            } else {
+                recorderMimeType = "";
+            }
+
+            mediaRecorder = recorderMimeType ? new MediaRecorder(stream, options) : new MediaRecorder(stream);
             audioChunks = [];
+
             mediaRecorder.ondataavailable = e => {
                 if (e.data.size > 0) audioChunks.push(e.data);
             };
+
             mediaRecorder.onstop = async () => {
                 if (!audioChunks.length) {
                     if (voiceStatus) voiceStatus.textContent = "No audio recorded. Try again.";
                     return;
                 }
 
-                const audioBlob = new Blob(audioChunks, { type: "audio/webm" });
+                const blobType = recorderMimeType || "audio/webm";
+                const audioBlob = new Blob(audioChunks, { type: blobType });
                 const formData = new FormData();
                 formData.append("audio", audioBlob, "speech.webm");
                 const voiceLang = voiceTargetLanguage ? voiceTargetLanguage.value : targetLanguage.value || "en";
@@ -177,7 +194,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
 
                         if (voiceStatus) voiceStatus.textContent = "Click to start speaking";
-
                     } else {
                         if (voiceStatus) voiceStatus.textContent = "Error during processing. Try again.";
                         if (voiceResult) voiceResult.textContent = data.message || "Voice translation failed.";
@@ -197,7 +213,13 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (err) {
             isRecording = false;
             mediaRecorder = null;
-            if (voiceStatus) voiceStatus.textContent = "Microphone access denied.";
+            if (voiceStatus) {
+                if (!navigator.mediaDevices || !window.MediaRecorder) {
+                    voiceStatus.textContent = "Browser does not support voice recording. Try Chrome or Edge.";
+                } else {
+                    voiceStatus.textContent = "Microphone access denied.";
+                }
+            }
         }
     }
 
