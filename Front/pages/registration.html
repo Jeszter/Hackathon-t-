@@ -7,6 +7,35 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/registration.css">
+    <style>
+        .country-guides {
+            position: relative;
+        }
+        .country-guides-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .country-guides .container {
+            position: relative;
+            z-index: 1;
+        }
+        .country-selector {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        #country-select {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            background: #ffffff;
+        }
+    </style>
 </head>
 <body>
 <div id="header-container"></div>
@@ -25,6 +54,109 @@
         </div>
         <div class="robot-container fade-in">
             <img src="../img/registration.png" alt="AI Assistant Robot" class="robot-image">
+        </div>
+    </div>
+</section>
+
+<section class="country-guides">
+    <div class="country-guides-bg"></div>
+    <div class="container">
+        <div class="country-selector">
+            <label for="country-select">Choose your European country</label>
+            <select id="country-select">
+                <option value="">Select country</option>
+                <option value="al">Albania</option>
+                <option value="ad">Andorra</option>
+                <option value="am">Armenia</option>
+                <option value="at">Austria</option>
+                <option value="az">Azerbaijan</option>
+                <option value="by">Belarus</option>
+                <option value="be">Belgium</option>
+                <option value="ba">Bosnia and Herzegovina</option>
+                <option value="bg">Bulgaria</option>
+                <option value="hr">Croatia</option>
+                <option value="cy">Cyprus</option>
+                <option value="cz">Czech Republic</option>
+                <option value="dk">Denmark</option>
+                <option value="ee">Estonia</option>
+                <option value="fi">Finland</option>
+                <option value="fr">France</option>
+                <option value="de">Germany</option>
+                <option value="gr">Greece</option>
+                <option value="hu">Hungary</option>
+                <option value="is">Iceland</option>
+                <option value="ie">Ireland</option>
+                <option value="it">Italy</option>
+                <option value="kz">Kazakhstan</option>
+                <option value="xk">Kosovo</option>
+                <option value="lv">Latvia</option>
+                <option value="li">Liechtenstein</option>
+                <option value="lt">Lithuania</option>
+                <option value="lu">Luxembourg</option>
+                <option value="mt">Malta</option>
+                <option value="md">Moldova</option>
+                <option value="mc">Monaco</option>
+                <option value="me">Montenegro</option>
+                <option value="nl">Netherlands</option>
+                <option value="mk">North Macedonia</option>
+                <option value="no">Norway</option>
+                <option value="pl">Poland</option>
+                <option value="pt">Portugal</option>
+                <option value="ro">Romania</option>
+                <option value="ru">Russia</option>
+                <option value="sm">San Marino</option>
+                <option value="rs">Serbia</option>
+                <option value="sk">Slovakia</option>
+                <option value="si">Slovenia</option>
+                <option value="es">Spain</option>
+                <option value="se">Sweden</option>
+                <option value="ch">Switzerland</option>
+                <option value="tr">Turkey</option>
+                <option value="ua">Ukraine</option>
+                <option value="gb">United Kingdom</option>
+                <option value="va">Vatican City</option>
+            </select>
+        </div>
+
+        <h2 class="sections-heading">Country-Specific Registration Guides</h2>
+        <div class="country-cards">
+            <div class="country-card fade-in" id="country-card">
+                <div class="country-flag" id="country-flag">🇪🇺</div>
+                <h3 id="country-title">Registration Overview</h3>
+                <p id="country-description">
+                    Select a country above to see registration requirements, deadlines, costs and official government websites.
+                </p>
+                <div class="country-details">
+                    <div class="country-detail">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <strong>Deadline:</strong>
+                            <span id="country-deadline">–</span>
+                        </div>
+                    </div>
+                    <div class="country-detail">
+                        <i class="fas fa-euro-sign"></i>
+                        <div>
+                            <strong>Cost:</strong>
+                            <span id="country-cost">–</span>
+                        </div>
+                    </div>
+                    <div class="country-detail">
+                        <i class="fas fa-file-alt"></i>
+                        <div>
+                            <strong>Documents:</strong>
+                            <span id="country-documents">–</span>
+                        </div>
+                    </div>
+                    <div class="country-detail" id="country-sites-wrapper">
+                        <i class="fas fa-globe"></i>
+                        <div>
+                            <strong>Official websites:</strong>
+                            <span id="country-sites">–</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -147,283 +279,232 @@
     </div>
 </section>
 
-<section class="country-guides">
-    <div class="country-guides-bg"></div>
-    <div class="container">
-        <h2 class="sections-heading">Country-Specific Registration Guides</h2>
-        <div class="country-cards">
-            <div class="country-card fade-in">
-                <div class="country-flag">🇩🇪</div>
-                <h3>Germany Registration</h3>
-                <p>Learn about the Anmeldung process in Germany, required documents, and how to schedule appointments at Bürgeramt offices.</p>
-                <div class="country-details">
-                    <div class="country-detail">
-                        <i class="fas fa-clock"></i>
-                        <div>
-                            <strong>Deadline:</strong> Within 14 days of moving
-                        </div>
-                    </div>
-                    <div class="country-detail">
-                        <i class="fas fa-euro-sign"></i>
-                        <div>
-                            <strong>Cost:</strong> Usually free
-                        </div>
-                    </div>
-                    <div class="country-detail">
-                        <i class="fas fa-file-alt"></i>
-                        <div>
-                            <strong>Documents:</strong> Passport, rental contract
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="country-card fade-in">
-                <div class="country-flag">🇵🇱</div>
-                <h3>Poland Registration</h3>
-                <p>Understand the meldunek process in Poland, including temporary and permanent registration requirements.</p>
-                <div class="country-details">
-                    <div class="country-detail">
-                        <i class="fas fa-clock"></i>
-                        <div>
-                            <strong>Deadline:</strong> Within 30 days of arrival
-                        </div>
-                    </div>
-                    <div class="country-detail">
-                        <i class="fas fa-euro-sign"></i>
-                        <div>
-                            <strong>Cost:</strong> Free for EU citizens
-                        </div>
-                    </div>
-                    <div class="country-detail">
-                        <i class="fas fa-file-alt"></i>
-                        <div>
-                            <strong>Documents:</strong> Passport, visa, rental agreement
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="country-card fade-in">
-                <div class="country-flag">🇫🇷</div>
-                <h3>France Registration</h3>
-                <p>Navigate the French registration system including OFII procedures for long-stay visas.</p>
-                <div class="country-details">
-                    <div class="country-detail">
-                        <i class="fas fa-clock"></i>
-                        <div>
-                            <strong>Deadline:</strong> Within 3 months of arrival
-                        </div>
-                    </div>
-                    <div class="country-detail">
-                        <i class="fas fa-euro-sign"></i>
-                        <div>
-                            <strong>Cost:</strong> Varies by visa type
-                        </div>
-                    </div>
-                    <div class="country-detail">
-                        <i class="fas fa-file-alt"></i>
-                        <div>
-                            <strong>Documents:</strong> Passport, visa, proof of address
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-
 <script>
     fetch('/header.html')
-        .then(response => {
+        .then(function (response) {
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                throw new Error('HTTP error ' + response.status)
             }
-            return response.text();
+            return response.text()
         })
-        .then(html => {
-            document.getElementById('header-container').innerHTML = html;
+        .then(function (html) {
+            document.getElementById('header-container').innerHTML = html
         })
-        .catch(error => {
+        .catch(function (error) {
             document.getElementById('header-container').innerHTML =
-                `<div style="color: red;">Error loading header: ${error.message}</div>`;
-        });
+                '<div style="color: red;">Error loading header: ' + error.message + '</div>'
+        })
 
-    // FAQ functionality
-    document.querySelectorAll('.faq-question').forEach(question => {
-        question.addEventListener('click', () => {
-            const item = question.parentElement;
-            item.classList.toggle('active');
-        });
-    });
+    var chatMessages = document.getElementById('chat-messages')
+    var chatInput = document.getElementById('chat-input')
+    var sendButton = document.getElementById('send-button')
 
-    // AI Chat functionality
-    const chatMessages = document.getElementById('chat-messages');
-    const chatInput = document.getElementById('chat-input');
-    const sendButton = document.getElementById('send-button');
-    const quickActions = document.querySelectorAll('.quick-action');
-
-    // Responses for different topics
-    const responses = {
-        'germany': {
-            message: "For registration in Germany, you'll need to complete the <strong>Anmeldung</strong> process. This must be done within 14 days of moving to your new address. You'll need to bring your passport, visa (if applicable), and a completed registration form. The landlord typically provides a confirmation of residence (Wohnungsgeberbestätigung).",
-            actions: [
-                { text: "Required documents", action: "germany-documents" },
-                { text: "Booking appointment", action: "germany-appointment" },
-                { text: "Cost and fees", action: "germany-cost" }
-            ]
-        },
-        'poland': {
-            message: "In Poland, registration is called <strong>meldunek</strong>. EU citizens must register if staying longer than 3 months, while non-EU citizens must register regardless of stay length. You typically need to register within 30 days of arrival.",
-            actions: [
-                { text: "Required documents", action: "poland-documents" },
-                { text: "Where to register", action: "poland-office" },
-                { text: "Temporary vs permanent", action: "poland-types" }
-            ]
-        },
-        'france': {
-            message: "For France, if you have a long-stay visa, you must validate it with the OFII (French Office of Immigration and Integration) within 3 months of arrival. This involves a medical examination and sometimes a civic training session.",
-            actions: [
-                { text: "OFII process", action: "france-ofii" },
-                { text: "Required documents", action: "france-documents" },
-                { text: "Medical examination", action: "france-medical" }
-            ]
-        },
-        'germany-documents': {
-            message: "For German registration (Anmeldung), you typically need: <ul><li>Valid passport or ID card</li><li>Visa or residence permit (if applicable)</li><li>Completed registration form</li><li>Landlord confirmation (Wohnungsgeberbestätigung)</li><li>Rental contract</li></ul> Some cities may require additional documents.",
-            actions: [
-                { text: "Back to Germany", action: "germany" },
-                { text: "Other countries", action: "default" }
-            ]
-        },
-        'default': {
-            message: "I can help you with registration processes in various countries. Which country are you interested in, or do you have a specific question about registration requirements?",
-            actions: [
-                { text: "Germany Registration", action: "germany" },
-                { text: "Poland Registration", action: "poland" },
-                { text: "France Registration", action: "france" }
-            ]
-        }
-    };
-
-    // Add a message to the chat
     function addMessage(text, isUser) {
-        const messageDiv = document.createElement('div');
-        messageDiv.classList.add('message', isUser ? 'message-user' : 'message-ai');
-
-        const bubbleDiv = document.createElement('div');
-        bubbleDiv.classList.add('message-bubble');
-        bubbleDiv.innerHTML = text;
-
-        messageDiv.appendChild(bubbleDiv);
-        chatMessages.appendChild(messageDiv);
-
-        // Scroll to bottom
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+        if (!chatMessages) return
+        var messageDiv = document.createElement('div')
+        messageDiv.classList.add('message', isUser ? 'message-user' : 'message-ai')
+        var bubbleDiv = document.createElement('div')
+        bubbleDiv.classList.add('message-bubble')
+        bubbleDiv.innerHTML = text
+        messageDiv.appendChild(bubbleDiv)
+        chatMessages.appendChild(messageDiv)
+        chatMessages.scrollTop = chatMessages.scrollHeight
     }
 
-    // Add quick action buttons
     function addQuickActions(actions) {
-        const quickActionsDiv = document.createElement('div');
-        quickActionsDiv.classList.add('quick-actions');
-
-        actions.forEach(action => {
-            const button = document.createElement('button');
-            button.classList.add('quick-action');
-            button.textContent = action.text;
-            button.setAttribute('data-action', action.action);
-            button.addEventListener('click', () => handleQuickAction(action.action));
-            quickActionsDiv.appendChild(button);
-        });
-
-        // Add to the last AI message
-        const lastMessage = chatMessages.lastElementChild;
+        if (!chatMessages) return
+        if (!actions || !actions.length) return
+        var quickActionsDiv = document.createElement('div')
+        quickActionsDiv.classList.add('quick-actions')
+        actions.forEach(function (action) {
+            var button = document.createElement('button')
+            button.classList.add('quick-action')
+            button.textContent = action.text
+            button.setAttribute('data-action', action.action)
+            button.addEventListener('click', function () {
+                handleQuickAction(action.action)
+            })
+            quickActionsDiv.appendChild(button)
+        })
+        var lastMessage = chatMessages.lastElementChild
         if (lastMessage && lastMessage.classList.contains('message-ai')) {
-            lastMessage.querySelector('.message-bubble').appendChild(quickActionsDiv);
+            lastMessage.querySelector('.message-bubble').appendChild(quickActionsDiv)
         }
     }
 
-    // Handle quick action button clicks
+    function detectCountryFromAction(action) {
+        if (!action) return null
+        if (action.indexOf('country:') === 0) {
+            return action.split(':')[1]
+        }
+        return null
+    }
+
     function handleQuickAction(action) {
-        const response = responses[action] || responses.default;
-        addMessage(response.message, false);
-        addQuickActions(response.actions);
+        var country = detectCountryFromAction(action)
+        if (country) {
+            sendToBackend('Tell me about registration process in ' + country, country)
+            return
+        }
+        if (action === 'documents') {
+            sendToBackend('List all required documents for registration.', null)
+        } else if (action === 'deadlines') {
+            sendToBackend('Explain typical registration deadlines.', null)
+        } else if (action === 'websites') {
+            sendToBackend('Give official government websites for registration.', null)
+        } else {
+            sendToBackend('Help me with registration process.', null)
+        }
     }
 
-    // Handle sending a message
-    function sendMessage() {
-        const message = chatInput.value.trim();
-        if (message) {
-            addMessage(message, true);
-            chatInput.value = '';
-
-            // Simulate AI thinking
-            setTimeout(() => {
-                let response = responses.default;
-
-                // Simple keyword matching
-                if (message.toLowerCase().includes('german') || message.toLowerCase().includes('germany')) {
-                    response = responses['germany'];
-                } else if (message.toLowerCase().includes('poland') || message.toLowerCase().includes('polish')) {
-                    response = responses['poland'];
-                } else if (message.toLowerCase().includes('france') || message.toLowerCase().includes('french')) {
-                    response = responses['france'];
-                } else if (message.toLowerCase().includes('document')) {
-                    if (message.toLowerCase().includes('german')) {
-                        response = responses['germany-documents'];
-                    }
+    function sendToBackend(message, country) {
+        if (!chatMessages) return
+        addMessage(message, true)
+        var payload = {
+            message: message,
+            language: 'en',
+            country: country || null
+        }
+        fetch('/api/registration/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+            .then(function (res) {
+                if (!res.ok) {
+                    throw new Error('HTTP error ' + res.status)
                 }
+                return res.json()
+            })
+            .then(function (data) {
+                addMessage(data.reply, false)
+                addQuickActions(data.quick_actions)
+            })
+            .catch(function (err) {
+                addMessage('Sorry, something went wrong: ' + err.message, false)
+            })
+    }
 
-                addMessage(response.message, false);
-                addQuickActions(response.actions);
-            }, 1000);
+    function sendMessage() {
+        if (!chatMessages || !chatInput) return
+        var message = chatInput.value.trim()
+        if (!message) return
+        sendToBackend(message, null)
+        chatInput.value = ''
+    }
+
+    if (sendButton && chatInput && chatMessages) {
+        sendButton.addEventListener('click', sendMessage)
+        chatInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                sendMessage()
+            }
+        })
+    }
+
+    function renderCountryInfo(info) {
+        var flagEl = document.getElementById('country-flag')
+        var titleEl = document.getElementById('country-title')
+        var descEl = document.getElementById('country-description')
+        var deadlineEl = document.getElementById('country-deadline')
+        var costEl = document.getElementById('country-cost')
+        var docsEl = document.getElementById('country-documents')
+        var sitesWrapper = document.getElementById('country-sites-wrapper')
+        var sitesEl = document.getElementById('country-sites')
+
+        if (!flagEl || !titleEl || !descEl) return
+
+        flagEl.textContent = info.flag || info.country_code.toUpperCase()
+        titleEl.textContent = info.process_title || info.country_name || info.country_code.toUpperCase()
+        descEl.textContent = info.description || ''
+        deadlineEl.textContent = info.deadline || 'N/A'
+        costEl.textContent = info.cost || 'Depends'
+
+        if (info.documents && info.documents.length) {
+            docsEl.textContent = info.documents.join(', ')
+        } else {
+            docsEl.textContent = 'Check official website'
+        }
+
+        if (info.immigration_sites && info.immigration_sites.length) {
+            sitesWrapper.style.display = 'flex'
+            sitesEl.innerHTML = ''
+            info.immigration_sites.forEach(function (site, index) {
+                var a = document.createElement('a')
+                a.href = site.url
+                a.target = '_blank'
+                a.rel = 'noopener noreferrer'
+                a.textContent = site.label || site.url
+                sitesEl.appendChild(a)
+                if (index !== info.immigration_sites.length - 1) {
+                    sitesEl.appendChild(document.createTextNode(' | '))
+                }
+            })
+        } else {
+            sitesWrapper.style.display = 'none'
+            sitesEl.innerHTML = ''
         }
     }
 
-    // Event listeners
-    sendButton.addEventListener('click', sendMessage);
-    chatInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            sendMessage();
-        }
-    });
+    function loadRegistrationInfo(countryCode) {
+        if (!countryCode) return
+        fetch('/api/get_registration_info', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                country_code: countryCode,
+                language: 'en'
+            })
+        })
+            .then(function (res) {
+                if (!res.ok) {
+                    throw new Error('HTTP error ' + res.status)
+                }
+                return res.json()
+            })
+            .then(function (data) {
+                renderCountryInfo(data)
+            })
+            .catch(function () {})
+    }
 
-    // Quick action buttons in initial message
-    quickActions.forEach(button => {
-        button.addEventListener('click', () => {
-            const action = button.getAttribute('data-action');
-            handleQuickAction(action);
-        });
-    });
+    var countrySelect = document.getElementById('country-select')
+    if (countrySelect) {
+        countrySelect.addEventListener('change', function () {
+            var code = countrySelect.value
+            if (!code) return
+            loadRegistrationInfo(code)
+        })
+    }
 
-    // Mobile menu toggle
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const navMenu = document.querySelector('.nav-menu');
+    var mobileMenuBtn = document.querySelector('.mobile-menu-btn')
+    var navMenu = document.querySelector('.nav-menu')
 
     if (mobileMenuBtn) {
-        mobileMenuBtn.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
+        mobileMenuBtn.addEventListener('click', function () {
+            navMenu.classList.toggle('active')
             mobileMenuBtn.innerHTML = navMenu.classList.contains('active')
                 ? '<i class="fas fa-times"></i>'
-                : '<i class="fas fa-bars"></i>';
-        });
+                : '<i class="fas fa-bars"></i>'
+        })
     }
 
-    // Smooth scrolling for navigation links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
         anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
+            e.preventDefault()
+            var target = document.querySelector(this.getAttribute('href'))
             if (target) {
                 target.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
-                });
+                })
             }
-        });
-    });
+        })
+    })
 </script>
 </body>
 </html>
