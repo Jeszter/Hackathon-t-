@@ -81,6 +81,9 @@ async def official():
     return FileResponse(pages_dir / "official.html")
 
 
+@app.get("/housing")
+async def housing():
+    return FileResponse(pages_dir / "housing.html")
 
 
 
